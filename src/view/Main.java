@@ -178,7 +178,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnQLKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLKHActionPerformed
         // TODO add your handling code here:
-        new KHACHHANGJDialog(this, true).setVisible(true);
+        new KhachHangJDialog(this, true).setVisible(true);
     }//GEN-LAST:event_btnQLKHActionPerformed
 
     private void btnQLMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLMenuActionPerformed
@@ -193,7 +193,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnQLNLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNLActionPerformed
         // TODO add your handling code here:
-        new NGUYENLIEUJDialog(this, true).setVisible(true);
+        new NguyenLieuJDialog(this, true).setVisible(true);
     }//GEN-LAST:event_btnQLNLActionPerformed
 
     private void btnTKDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTKDoanhThuActionPerformed
