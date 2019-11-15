@@ -17,6 +17,8 @@ public class NhanVienJDialog extends javax.swing.JDialog {
     public NhanVienJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setTitle("Quản Lý Nhân Viên");
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -37,8 +39,8 @@ public class NhanVienJDialog extends javax.swing.JDialog {
         txtMatKhau = new javax.swing.JTextField();
         txtTenNhanVien = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        rbQuanLy = new javax.swing.JRadioButton();
-        rbNha = new javax.swing.JRadioButton();
+        rdoQuanLy = new javax.swing.JRadioButton();
+        rdoNV = new javax.swing.JRadioButton();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
@@ -66,9 +68,9 @@ public class NhanVienJDialog extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 13)); // NOI18N
         jLabel6.setText("Vai Trò:");
 
-        rbQuanLy.setText("Quản Lý");
+        rdoQuanLy.setText("Quản Lý");
 
-        rbNha.setText("Nhân Viên");
+        rdoNV.setText("Nhân Viên");
 
         btnAdd.setText("Add");
 
@@ -94,9 +96,9 @@ public class NhanVienJDialog extends javax.swing.JDialog {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(85, 85, 85)
-                        .addComponent(rbQuanLy)
+                        .addComponent(rdoQuanLy)
                         .addGap(56, 56, 56)
-                        .addComponent(rbNha))
+                        .addComponent(rdoNV))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addComponent(btnAdd)
@@ -143,8 +145,8 @@ public class NhanVienJDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(rbQuanLy)
-                    .addComponent(rbNha))
+                    .addComponent(rdoQuanLy)
+                    .addComponent(rdoNV))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
@@ -303,8 +305,8 @@ public class NhanVienJDialog extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JRadioButton rbNha;
-    private javax.swing.JRadioButton rbQuanLy;
+    private javax.swing.JRadioButton rdoNV;
+    private javax.swing.JRadioButton rdoQuanLy;
     private javax.swing.JTextField txtMa;
     private javax.swing.JTextField txtMatKhau;
     private javax.swing.JTextField txtTenNhanVien;

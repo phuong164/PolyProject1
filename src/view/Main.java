@@ -16,6 +16,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setTitle("Quản Lý Quán Trà Sữa");
     }
 
     /**
@@ -63,18 +65,43 @@ public class Main extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridLayout(0, 1));
 
         btnQLNV.setText("Quản lý nhân viên");
+        btnQLNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLNVActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnQLNV);
 
         btnQLKH.setText("Quản lý khách hàng");
+        btnQLKH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLKHActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnQLKH);
 
         btnQLMenu.setText("Quản lý menu");
+        btnQLMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLMenuActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnQLMenu);
 
         btnQLHD.setText("Quản lý hóa đơn");
+        btnQLHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLHDActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnQLHD);
 
         btnQLNL.setText("Quản lý nguyên liệu");
+        btnQLNL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLNLActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnQLNL);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -98,6 +125,11 @@ public class Main extends javax.swing.JFrame {
         jPanel3.add(btnDoiMatKhau);
 
         btnTKDoanhThu.setText("Thống kê doanh thu");
+        btnTKDoanhThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTKDoanhThuActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnTKDoanhThu);
 
         btnTroGiup.setText("Trợ giúp");
@@ -136,8 +168,38 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
-        
+      new DangNhapJDialog(this, true).setVisible(true);
     }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void btnQLNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNVActionPerformed
+        // TODO add your handling code here:
+        new NhanVienJDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_btnQLNVActionPerformed
+
+    private void btnQLKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLKHActionPerformed
+        // TODO add your handling code here:
+        new KHACHHANGJDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_btnQLKHActionPerformed
+
+    private void btnQLMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLMenuActionPerformed
+        // TODO add your handling code here:
+        new MenuJDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_btnQLMenuActionPerformed
+
+    private void btnQLHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLHDActionPerformed
+        // TODO add your handling code here:
+        new HoaDonJDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_btnQLHDActionPerformed
+
+    private void btnQLNLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNLActionPerformed
+        // TODO add your handling code here:
+        new NGUYENLIEUJDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_btnQLNLActionPerformed
+
+    private void btnTKDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTKDoanhThuActionPerformed
+        // TODO add your handling code here:
+        new ThongKeJFrame().setVisible(true);
+    }//GEN-LAST:event_btnTKDoanhThuActionPerformed
 
     /**
      * @param args the command line arguments
