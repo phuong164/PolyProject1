@@ -30,6 +30,7 @@ public class NhanVienJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         txtMa = new javax.swing.JTextField();
@@ -68,8 +69,10 @@ public class NhanVienJDialog extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 13)); // NOI18N
         jLabel6.setText("Vai Trò:");
 
+        buttonGroup1.add(rdoQuanLy);
         rdoQuanLy.setText("Quản Lý");
 
+        buttonGroup1.add(rdoNV);
         rdoNV.setText("Nhân Viên");
 
         btnAdd.setText("Add");
@@ -294,6 +297,7 @@ public class NhanVienJDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

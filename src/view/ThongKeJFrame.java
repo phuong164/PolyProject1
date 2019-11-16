@@ -18,6 +18,7 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Thống Kê Doanh Thu");
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
