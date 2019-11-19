@@ -16,9 +16,10 @@ import model.KhachHang;
  */
 public class KhachHangJDialog extends javax.swing.JDialog {
 
-        int index = 0;
+    int index = 0;
     KhachHangDao dao = new KhachHangDao();
     String imageName = null;
+
     /**
      * Creates new form KHACHHANGJDialog
      */
@@ -27,6 +28,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
     }
+
     void load() {
         DefaultTableModel model = (DefaultTableModel) tblGrid.getModel();
         model.setRowCount(0);
@@ -47,7 +49,8 @@ public class KhachHangJDialog extends javax.swing.JDialog {
             System.out.println("");
         }
     }
-         void insert() {
+
+    void insert() {
         KhachHang model = getModel();
         try {
             dao.insert(model);
@@ -66,7 +69,8 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     private void clear() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
- void update() {
+
+    void update() {
         KhachHang model = getModel();
         try {
             dao.update(model);
@@ -115,7 +119,6 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     }
 
 // 
-
     void setStatus(boolean insertable) {
         txtMaKH.setEditable(insertable);
         btnAdd.setEnabled(insertable);
@@ -128,7 +131,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         btnNext.setEnabled(!insertable && last);
         btnLast.setEnabled(!insertable && last);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -274,7 +277,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         pnlEditLayout.setVerticalGroup(
             pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEditLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addContainerGap()
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMaKH))
@@ -294,7 +297,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDiemTL)
                     .addComponent(txtDiemTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnEdit)
@@ -379,7 +382,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                     .addComponent(btnFind)
                     .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 
@@ -407,8 +410,8 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -423,7 +426,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFindActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       insert();
+        insert();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -435,7 +438,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
-       this.index = 0;
+        this.index = 0;
         this.edit();
     }//GEN-LAST:event_btnFirstActionPerformed
 

@@ -12,17 +12,23 @@ import java.util.Date;
  *
  * @author OS
  */
-public class KhachHang implements Serializable{
+public class KhachHang implements Serializable {
+
     private String MaKH;
     private String TenKH;
     private int SoDT;
     private Date NgaySinh;
     private int Diem;
 
-    @Override
-    public String toString() {
-        return this.TenKH;
-        
+    public KhachHang() {
+    }
+
+    public KhachHang(String MaKH, String TenKH, int SoDT, Date NgaySinh, int Diem) {
+        this.MaKH = MaKH;
+        this.TenKH = TenKH;
+        this.SoDT = SoDT;
+        this.NgaySinh = NgaySinh;
+        this.Diem = Diem;
     }
 
     public String getMaKH() {
@@ -64,6 +70,5 @@ public class KhachHang implements Serializable{
     public void setDiem(int Diem) {
         this.Diem = Diem;
     }
-    
-    
+
 }
