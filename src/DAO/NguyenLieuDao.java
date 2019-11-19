@@ -18,7 +18,7 @@ import model.NguyenLieu;
  */
 public class NguyenLieuDao {
      public void insert(NguyenLieu model) {
-        String sql = "INSERT INTO NHANVIEN (tenNL,soLuong,donGia,nCC) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO NGUYENLIEU (tenNL,soLuong,donGia,nCC) VALUES (?, ?, ?, ?)";
         JdbcHelper.executeUpdate(sql,
                 model.getTenNL(),
                 model.getSoLuong(),
@@ -27,7 +27,7 @@ public class NguyenLieuDao {
     }
 
     public void update(NguyenLieu model) {
-        String sql = "UPDATE NHANVIEN SET soLuong=?, donGia=?, nCC=?, WHERE tenNL=?";
+        String sql = "UPDATE NGUYENLIEU SET soLuong=?, donGia=?, nCC=?, WHERE tenNL=?";
         JdbcHelper.executeUpdate(sql,
                 model.getTenNL(),
                 model.getSoLuong(),
