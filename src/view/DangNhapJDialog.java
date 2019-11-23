@@ -5,19 +5,50 @@
  */
 package view;
 
+import DAO.NhanVienDao;
+import JDBC.DialogHelper;
+import JDBC.ShareHelper;
+import model.NhanVien;
+
 /**
  *
  * @author ADMIN
  */
 public class DangNhapJDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DangNhapJDialog
-     */
     public DangNhapJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setTitle("Đăng Nhập");
+    }
+
+    NhanVienDao dao = new NhanVienDao();
+
+    void login() {
+        String manv = txtTenDangNhap.getText();
+        String matKhau = new String(txtMatKhau.getPassword());
+        try {
+            NhanVien nhanVien = dao.findById(manv);
+            if (nhanVien != null) {
+                String matKhau2 = nhanVien.getMatKhau();
+                if (matKhau.equals(matKhau2)) {
+                    DialogHelper.alert(null, "Đăng nhập thành công!");
+                    this.dispose();
+                } else {
+                    DialogHelper.alert(null, "Sai mật khẩu!");
+                }
+            } else {
+                DialogHelper.alert(null, "Sai tên đăng nhập!");
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(null, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void exit() {
+        if (DialogHelper.confirm(this, "Bạn có muốn thoát khỏi ứng dụng không?")) {
+            System.exit(0);
+        }
     }
 
     /**
@@ -63,10 +94,20 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
         chkHienThiMatKhau.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         chkHienThiMatKhau.setText("Hiển thị mật khẩu");
+        chkHienThiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkHienThiMatKhauActionPerformed(evt);
+            }
+        });
 
         btnLogin.setBackground(new java.awt.Color(204, 102, 0));
         btnLogin.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/login.jpg"))); // NOI18N
 
@@ -146,6 +187,25 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMatKhauActionPerformed
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        if (this.isvalid()) {
+            this.login();
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void chkHienThiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkHienThiMatKhauActionPerformed
+        // TODO add your handling code here:
+        String message = "Hiển thị mật khẩu";
+        char chr = '*';
+        if (chkHienThiMatKhau.isSelected()) {
+            message = "Ẩn mật khẩu";
+            chr = (char) 0;
+        }
+        chkHienThiMatKhau.setText(message);
+        txtMatKhau.setEchoChar(chr);
+    }//GEN-LAST:event_chkHienThiMatKhauActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -199,4 +259,15 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtTenDangNhap;
     // End of variables declaration//GEN-END:variables
+
+    public boolean isvalid() {
+        if (txtTenDangNhap.getText().length() == 0) {
+            DialogHelper.alert(this, "Vui lòng nhập tên đăng nhập!");
+            return false;
+        }
+        if (txtMatKhau.getText().length() == 0) {
+            DialogHelper.alert(this, "Vui lòng nhập password!");
+        }
+        return true;
+    }
 }
