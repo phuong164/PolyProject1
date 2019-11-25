@@ -17,7 +17,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("Quản Lý Quán Trà Sữa ");
+        this.setTitle("Quản Lý Quán Trà Sữa");
         new DangNhapJDialog(this, true).setVisible(true);
     }
 
