@@ -24,7 +24,7 @@ public class NhanVienJDialog extends javax.swing.JDialog {
     public NhanVienJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setTitle("Quản Lý Nhân Viên ");
+        this.setTitle("Quản Lý Nhân Viên");
         setLocationRelativeTo(null);
         
     }
