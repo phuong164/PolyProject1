@@ -5,11 +5,20 @@
  */
 package view;
 
+import DAO.KhachHangDao;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.KhachHang;
+
 /**
  *
  * @author ADMIN
  */
 public class KhachHangJDialog extends javax.swing.JDialog {
+
+    int index = 0;
+    KhachHangDao dao = new KhachHangDao();
+    String imageName = null;
 
     /**
      * Creates new form KHACHHANGJDialog
@@ -17,6 +26,110 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     public KhachHangJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+    }
+
+    void load() {
+        DefaultTableModel model = (DefaultTableModel) tblGrid.getModel();
+        model.setRowCount(0);
+
+        try {
+            List<KhachHang> list = dao.select();
+            for (KhachHang cd : list) {
+                Object[] row = {
+                    cd.getMaKH(),
+                    cd.getTenKH(),
+                    cd.getSoDT(),
+                    cd.getNgaySinh(),
+                    cd.getDiem()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            System.out.println("");
+        }
+    }
+
+    void insert() {
+        KhachHang model = getModel();
+        try {
+            dao.insert(model);
+            this.load();
+            this.clear();
+            System.out.println("Thêm mới thành công!");
+        } catch (Exception e) {
+            System.out.println("Thêm mới thất bại!");
+        }
+    }
+
+    private KhachHang getModel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void clear() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void update() {
+        KhachHang model = getModel();
+        try {
+            dao.update(model);
+            this.load();
+            System.out.println("Cập nhật thành công!");
+        } catch (Exception e) {
+            System.out.println("Cập nhật thất bại!");
+        }
+    }
+
+    void delete() {
+        if (rootPaneCheckingEnabled) {
+            String makh = txtMaKH.getText();
+            try {
+                dao.delete(makh);
+                this.load();
+                this.clear();
+
+            } catch (Exception e) {
+
+            }
+        }
+    }
+// 
+
+    void edit() {
+        try {
+            String makh = (String) tblGrid.getValueAt(this.index, 0);
+            KhachHang model = dao.findById(makh);
+            if (model != null) {
+                this.setModel(model);
+                this.setStatus(false);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    void setModel(KhachHang model) {
+        txtMaKH.setText(model.getMaKH());
+        txtTenKH.setText(model.getTenKH());
+        txtSoDT.setText(String.valueOf(model.getSoDT()));
+        txtNgaySinh.setText(String.valueOf(model.getNgaySinh()));
+        txtDiemTL.setText(String.valueOf(model.getDiem()));
+
+    }
+
+// 
+    void setStatus(boolean insertable) {
+        txtMaKH.setEditable(insertable);
+        btnAdd.setEnabled(insertable);
+        btnEdit.setEnabled(!insertable);
+        btnDelete.setEnabled(!insertable);
+        boolean first = this.index > 0;
+        boolean last = this.index < tblGrid.getRowCount() - 1;
+        btnFirst.setEnabled(!insertable && first);
+        btnPrevious.setEnabled(!insertable && first);
+        btnNext.setEnabled(!insertable && last);
+        btnLast.setEnabled(!insertable && last);
     }
 
     /**
@@ -76,18 +189,53 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         lblDiemTL.setText("Điển tích lũy:");
 
         btnPrevious.setText("<<");
+        btnPrevious.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousActionPerformed(evt);
+            }
+        });
 
         btnNext.setText(">>");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         btnLast.setText(">|");
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnFirst.setText("|<");
+        btnFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlEditLayout = new javax.swing.GroupLayout(pnlEdit);
         pnlEdit.setLayout(pnlEditLayout);
@@ -129,7 +277,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         pnlEditLayout.setVerticalGroup(
             pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEditLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addContainerGap()
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMaKH))
@@ -149,7 +297,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDiemTL)
                     .addComponent(txtDiemTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnEdit)
@@ -234,7 +382,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                     .addComponent(btnFind)
                     .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 
@@ -262,8 +410,8 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -276,6 +424,38 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnFindActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        insert();
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        this.update();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        this.delete();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        this.index = 0;
+        this.edit();
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
+        this.index--;
+        this.edit();
+    }//GEN-LAST:event_btnPreviousActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        this.index++;
+        this.edit();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        this.index = tblGrid.getRowCount() - 1;
+        this.edit();
+    }//GEN-LAST:event_btnLastActionPerformed
 
     /**
      * @param args the command line arguments
@@ -354,4 +534,10 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtSoDT;
     private javax.swing.JTextField txtTenKH;
     // End of variables declaration//GEN-END:variables
+
+    private static class DialogHelper {
+
+        public DialogHelper() {
+        }
+    }
 }
