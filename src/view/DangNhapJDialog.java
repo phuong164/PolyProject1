@@ -19,7 +19,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     public DangNhapJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setTitle("Đăng Nhập ");
+        this.setTitle("Đăng Nhập");
     }
 
     NhanVienDao dao = new NhanVienDao();
