@@ -5,6 +5,13 @@
  */
 package view;
 
+import DAO.NguyenLieuDao;
+import JDBC.DialogHelper;
+import JDBC.ShareHelper;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.NguyenLieu;
+
 /**
  *
  * @author ADMIN
@@ -20,7 +27,130 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
         this.setTitle("Quản Lý Nguyên Liệu");
         setLocationRelativeTo(null);
     }
+int index = 0; // vị trí của nhân viên đang hiển thị trên form 
+    NguyenLieuDao dao = new NguyenLieuDao();
 
+    void init() {
+        setIconImage(ShareHelper.APP_ICON);
+        setLocationRelativeTo(null);
+    }
+
+    void load() {
+        DefaultTableModel model = (DefaultTableModel) tblGrid.getModel();
+        model.setRowCount(0);
+        try {
+            List<NguyenLieu> list = dao.select();
+            for (NguyenLieu nl : list) {
+                Object[] row = {
+                    nl.getTenNL(),
+                    nl.getSoLuong(),
+                    nl.getDonGia(),
+                    nl.getnCC()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void insert() {
+        NguyenLieu model = getModel();
+
+        String confirm = new String(txtTenNL.getName());
+        if (confirm.equals(model.getTenNL())) {
+            try {
+                dao.insert(model);
+                this.load();
+                this.clear();
+                DialogHelper.alert(this, "Thêm mới thành công!");
+            } catch (Exception e) {
+                DialogHelper.alert(this, "Thêm mới thất bại!");
+            }
+        } else {
+            DialogHelper.alert(this, "Xác nhận mật khẩu không đúng!");
+        }
+    }
+
+    void delete() {
+        if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa nguyên liệu này?")) {
+            String manl = txtTenNL.getText();
+            try {
+                dao.delete(manl);
+                this.load();
+                this.clear();
+                DialogHelper.alert(this, "Xóa thành công!");
+            } catch (Exception e) {
+                DialogHelper.alert(this, "Xóa thất bại!");
+            }
+        }
+    }
+
+    void edit() {
+        try {
+            String manl = (String) tblGrid.getValueAt(this.index, 0);
+            NguyenLieu model = dao.findById(manl);
+            if (model != null) {
+                this.setModel(model);
+                this.setStatus(false);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void update() {
+        NguyenLieu model = getModel();
+
+        String confirm = new String(txtTenNL.getName());
+        if (!confirm.equals(model.getTenNL())) {
+            DialogHelper.alert(this, "Xác nhận mật khẩu không đúng!");
+        } else {
+            try {
+                dao.update(model);
+                this.load();
+                DialogHelper.alert(this, "Cập nhật thành công!");
+            } catch (Exception e) {
+                DialogHelper.alert(this, "Cập nhật thất bại!");
+            }
+        }
+    }
+
+    void clear() {
+        this.setModel(new NguyenLieu());
+        this.setStatus(true);
+    }
+
+    void setModel(NguyenLieu model) {
+        txtTenNL.setText(model.getTenNL());
+        txtSoLuong.setText(String.valueOf(model.getSoLuong()));
+        txtDonGia.setText(String.valueOf(model.getDonGia()));
+        txtNhaCC.setText(model.getnCC());
+
+    }
+
+    NguyenLieu getModel() {
+        NguyenLieu model = new NguyenLieu();
+        model.setTenNL(txtTenNL.getText());
+        model.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
+        model.setDonGia(Float.valueOf(txtDonGia.getText()));
+        model.setnCC(txtNhaCC.getText());
+        return model;
+    }
+
+    void setStatus(boolean insertable) {
+        txtTenNL.setEditable(insertable);
+        btnAdd.setEnabled(insertable);
+        btnEdit.setEnabled(!insertable);
+        btnDelete.setEnabled(!insertable);
+
+        boolean first = this.index > 0;
+        boolean last = this.index < tblGrid.getRowCount() - 1;
+        btnfirst.setEnabled(!insertable && first);
+        btnPrevious.setEnabled(!insertable && first);
+        btnNext.setEnabled(!insertable && last);
+        btnLast.setEnabled(!insertable && last);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,13 +169,13 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
         lblDonGia = new javax.swing.JLabel();
         txtTenNL = new javax.swing.JTextField();
         txtSoLuong = new javax.swing.JTextField();
-        txDonGia = new javax.swing.JTextField();
+        txtDonGia = new javax.swing.JTextField();
         lblNhaCC = new javax.swing.JLabel();
         txtNhaCC = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        btnFirst = new javax.swing.JButton();
+        btnfirst = new javax.swing.JButton();
         btnPrevious = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         btnLast = new javax.swing.JButton();
@@ -56,6 +186,11 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
         tblGrid = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblTitle.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lblTitle.setText("NGUYÊN LIỆU");
@@ -75,9 +210,9 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
             }
         });
 
-        txDonGia.addActionListener(new java.awt.event.ActionListener() {
+        txtDonGia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txDonGiaActionPerformed(evt);
+                txtDonGiaActionPerformed(evt);
             }
         });
 
@@ -94,18 +229,53 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
-        btnFirst.setText("|<");
+        btnfirst.setText("|<");
+        btnfirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnfirstActionPerformed(evt);
+            }
+        });
 
         btnPrevious.setText("<<");
+        btnPrevious.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousActionPerformed(evt);
+            }
+        });
 
         btnNext.setText(">>");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         btnLast.setText(">|");
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlEditLayout = new javax.swing.GroupLayout(pnlEdit);
         pnlEdit.setLayout(pnlEditLayout);
@@ -119,14 +289,14 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDelete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnFirst)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnfirst)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPrevious)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnNext)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLast)
-                .addContainerGap())
+                .addGap(18, 18, 18))
             .addGroup(pnlEditLayout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -138,9 +308,9 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtTenNL)
                     .addComponent(txtSoLuong)
-                    .addComponent(txDonGia)
+                    .addComponent(txtDonGia)
                     .addComponent(txtNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
         pnlEditLayout.setVerticalGroup(
             pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,20 +326,21 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDonGia)
-                    .addComponent(txDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNhaCC)
                     .addComponent(txtNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnEdit)
                     .addComponent(btnDelete)
-                    .addComponent(btnFirst)
-                    .addComponent(btnPrevious)
-                    .addComponent(btnNext)
-                    .addComponent(btnLast))
+                    .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnfirst)
+                        .addComponent(btnPrevious)
+                        .addComponent(btnNext)
+                        .addComponent(btnLast)))
                 .addGap(25, 25, 25))
         );
 
@@ -199,6 +370,11 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
                 "Tên nguyên liệu", "Số lượng", "Đơn giá", "Nhà cung cấp"
             }
         ));
+        tblGrid.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGridMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblGrid);
 
         javax.swing.GroupLayout pnlListLayout = new javax.swing.GroupLayout(pnlList);
@@ -265,13 +441,69 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSoLuongActionPerformed
 
-    private void txDonGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txDonGiaActionPerformed
+    private void txtDonGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDonGiaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txDonGiaActionPerformed
+    }//GEN-LAST:event_txtDonGiaActionPerformed
 
     private void btnAddAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_btnAddAncestorMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddAncestorMoved
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        update();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        delete();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnfirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnfirstActionPerformed
+        // TODO add your handling code here:
+        this.index = 0;
+        this.edit();
+    }//GEN-LAST:event_btnfirstActionPerformed
+
+    private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
+        // TODO add your handling code here:
+        this.index--;
+        this.edit();
+    }//GEN-LAST:event_btnPreviousActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        this.index++;
+        this.edit();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        // TODO add your handling code here:
+        this.index = tblGrid.getRowCount() - 1;
+        this.edit();
+    }//GEN-LAST:event_btnLastActionPerformed
+
+    private void tblGridMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridMouseClicked
+        // TODO add your handling code here:
+         if (evt.getClickCount() == 2) {
+            this.index = tblGrid.rowAtPoint(evt.getPoint());
+            if (this.index >= 0) {
+                this.edit();
+                jTabbedPane1.setSelectedIndex(0);
+            }
+        }
+    }//GEN-LAST:event_tblGridMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.load();
+        this.setStatus(true);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -321,10 +553,10 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnFind;
-    private javax.swing.JButton btnFirst;
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
+    private javax.swing.JButton btnfirst;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -336,7 +568,7 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
     private javax.swing.JPanel pnlEdit;
     private javax.swing.JPanel pnlList;
     private javax.swing.JTable tblGrid;
-    private javax.swing.JTextField txDonGia;
+    private javax.swing.JTextField txtDonGia;
     private javax.swing.JTextField txtFind;
     private javax.swing.JTextField txtNhaCC;
     private javax.swing.JTextField txtSoLuong;

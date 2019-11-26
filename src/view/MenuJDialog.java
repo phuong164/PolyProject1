@@ -14,6 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import model.Menu;
 
+
 /**
  *
  * @author ADMIN
@@ -149,12 +150,14 @@ public class MenuJDialog extends javax.swing.JDialog {
     void selectImage() {
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File f = fileChooser.getSelectedFile();
+            
             if (ShareHelper.saveLogo(f)) {
                 lblHinh.setIcon(ShareHelper.readLogo(f.getName()));
                 lblHinh.setToolTipText(f.getName());
             }
         }
     }
+
     private javax.swing.JFileChooser fileChooser;
 
     /**

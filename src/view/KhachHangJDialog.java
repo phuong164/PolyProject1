@@ -6,6 +6,9 @@
 package view;
 
 import DAO.KhachHangDao;
+import JDBC.DateHelper;
+import JDBC.DialogHelper;
+import JDBC.ShareHelper;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
@@ -16,10 +19,6 @@ import model.KhachHang;
  */
 public class KhachHangJDialog extends javax.swing.JDialog {
 
-    int index = 0;
-    KhachHangDao dao = new KhachHangDao();
-    String imageName = null;
-
     /**
      * Creates new form KHACHHANGJDialog
      */
@@ -29,72 +28,65 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }
 
+    int index = 0;
+    KhachHangDao dao = new KhachHangDao();
+
+    void init() {
+        setIconImage(ShareHelper.APP_ICON);
+        setLocationRelativeTo(null);
+    }
+
     void load() {
         DefaultTableModel model = (DefaultTableModel) tblGrid.getModel();
         model.setRowCount(0);
-
         try {
             List<KhachHang> list = dao.select();
-            for (KhachHang cd : list) {
+            for (KhachHang kh : list) {
                 Object[] row = {
-                    cd.getMaKH(),
-                    cd.getTenKH(),
-                    cd.getSoDT(),
-                    cd.getNgaySinh(),
-                    cd.getDiem()
+                    kh.getMaKH(),
+                    kh.getTenKH(),
+                    kh.getSoDT(),
+                    kh.getNgaySinh(),
+                    kh.getDiem()
                 };
                 model.addRow(row);
             }
         } catch (Exception e) {
-            System.out.println("");
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
         }
     }
 
     void insert() {
         KhachHang model = getModel();
-        try {
-            dao.insert(model);
-            this.load();
-            this.clear();
-            System.out.println("Thêm mới thành công!");
-        } catch (Exception e) {
-            System.out.println("Thêm mới thất bại!");
-        }
-    }
 
-    private KhachHang getModel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    void update() {
-        KhachHang model = getModel();
-        try {
-            dao.update(model);
-            this.load();
-            System.out.println("Cập nhật thành công!");
-        } catch (Exception e) {
-            System.out.println("Cập nhật thất bại!");
+        String confirm = new String(txtMaKH.getName());
+        if (confirm.equals(model.getMaKH())) {
+            try {
+                dao.insert(model);
+                this.load();
+                this.clear();
+                DialogHelper.alert(this, "Thêm mới thành công!");
+            } catch (Exception e) {
+                DialogHelper.alert(this, "Thêm mới thất bại!");
+            }
+        } else {
+            DialogHelper.alert(this, "Xác nhận mật khẩu không đúng!");
         }
     }
 
     void delete() {
-        if (rootPaneCheckingEnabled) {
+        if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa khách hàng này?")) {
             String makh = txtMaKH.getText();
             try {
                 dao.delete(makh);
                 this.load();
                 this.clear();
-
+                DialogHelper.alert(this, "Xóa thành công!");
             } catch (Exception e) {
-
+                DialogHelper.alert(this, "Xóa thất bại!");
             }
         }
     }
-// 
 
     void edit() {
         try {
@@ -105,25 +97,58 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 this.setStatus(false);
             }
         } catch (Exception e) {
-
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
         }
+    }
+
+    void update() {
+        KhachHang model = getModel();
+
+        String confirm = new String(txtMaKH.getName());
+        if (!confirm.equals(model.getMaKH())) {
+            DialogHelper.alert(this, "Xác nhận mã khách hàng không đúng!");
+        } else {
+            try {
+                dao.update(model);
+                this.load();
+                DialogHelper.alert(this, "Cập nhật thành công!");
+            } catch (Exception e) {
+                DialogHelper.alert(this, "Cập nhật thất bại!");
+            }
+        }
+    }
+
+    void clear() {
+        this.setModel(new KhachHang());
+        this.setStatus(true);
     }
 
     void setModel(KhachHang model) {
         txtMaKH.setText(model.getMaKH());
         txtTenKH.setText(model.getTenKH());
         txtSoDT.setText(String.valueOf(model.getSoDT()));
-        txtNgaySinh.setText(String.valueOf(model.getNgaySinh()));
+        txtNgaySinh.setText(DateHelper.toString(model.getNgaySinh()));
         txtDiemTL.setText(String.valueOf(model.getDiem()));
 
     }
 
-// 
+    KhachHang getModel() {
+        KhachHang model = new KhachHang();
+        model.setMaKH(txtMaKH.getText());
+        model.setTenKH(txtTenKH.getText());
+        model.setSoDT(Integer.valueOf(txtSoDT.getText()));
+        model.setNgaySinh(DateHelper.toDate(txtNgaySinh.getText()));
+        model.setDiem(Integer.valueOf(txtDiemTL.getText()));
+
+        return model;
+    }
+
     void setStatus(boolean insertable) {
         txtMaKH.setEditable(insertable);
         btnAdd.setEnabled(insertable);
         btnEdit.setEnabled(!insertable);
         btnDelete.setEnabled(!insertable);
+
         boolean first = this.index > 0;
         boolean last = this.index < tblGrid.getRowCount() - 1;
         btnFirst.setEnabled(!insertable && first);
@@ -169,6 +194,11 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         btnFind = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("KHÁCH HÀNG");
@@ -344,6 +374,11 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tblGrid.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGridMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblGrid);
 
         txtFind.addActionListener(new java.awt.event.ActionListener() {
@@ -457,6 +492,23 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         this.edit();
     }//GEN-LAST:event_btnLastActionPerformed
 
+    private void tblGridMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            this.index = tblGrid.rowAtPoint(evt.getPoint());
+            if (this.index >= 0) {
+                this.edit();
+                jTabbedPane1.setSelectedIndex(0);
+            }
+        }
+    }//GEN-LAST:event_tblGridMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        load();
+        setStatus(true);
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -535,9 +587,4 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtTenKH;
     // End of variables declaration//GEN-END:variables
 
-    private static class DialogHelper {
-
-        public DialogHelper() {
-        }
-    }
 }

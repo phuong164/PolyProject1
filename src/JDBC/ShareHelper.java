@@ -8,23 +8,29 @@ package JDBC;
 import model.NhanVien;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
+import view.MenuJDialog;
 
 public class ShareHelper {
 
     public static final Image APP_ICON;
 
     static {         // Tải biểu tượng ứng dụng    
-        String file = "/images/fpt.png";
+        String file = "/photo/15.jpg";
         APP_ICON = new ImageIcon(ShareHelper.class.getResource(file)).getImage();
     }
 
     public static boolean saveLogo(File file) {
-        File dir = new File("logos");         // Tạo thư mục nếu chưa tồn tại  
+        File dir = new File("image");         // Tạo thư mục nếu chưa tồn tại  
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -40,11 +46,14 @@ public class ShareHelper {
     }
 
     /**
-     * * Đọc hình ảnh logo chuyên đề * @param fileName là tên file logo *
+     * * Đọc hình ảnh logo chuyên đề * @param fileName là tên file logo
+     *
+     *
      * @return ảnh đọc được
      */
     public static ImageIcon readLogo(String fileName) {
-        File path = new File("logos", fileName);
+        
+        File path = new File("image", fileName);
         return new ImageIcon(path.getAbsolutePath());
     }
     /**
