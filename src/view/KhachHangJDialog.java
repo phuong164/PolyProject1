@@ -76,7 +76,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
 
     void delete() {
         if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa khách hàng này?")) {
-            String makh = txtMaKH.getText();
+            int makh = Integer.parseInt(txtMaKH.getText());
             try {
                 dao.delete(makh);
                 this.load();
@@ -90,7 +90,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
 
     void edit() {
         try {
-            String makh = (String) tblGrid.getValueAt(this.index, 0);
+            int makh = (int) tblGrid.getValueAt(this.index, 0);
             KhachHang model = dao.findById(makh);
             if (model != null) {
                 this.setModel(model);
@@ -124,7 +124,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     }
 
     void setModel(KhachHang model) {
-        txtMaKH.setText(model.getMaKH());
+        txtMaKH.setText(String.valueOf(model.getMaKH()));
         txtTenKH.setText(model.getTenKH());
         txtSoDT.setText(String.valueOf(model.getSoDT()));
         txtNgaySinh.setText(DateHelper.toString(model.getNgaySinh()));
@@ -134,7 +134,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
 
     KhachHang getModel() {
         KhachHang model = new KhachHang();
-        model.setMaKH(txtMaKH.getText());
+        model.setMaKH(Integer.valueOf(txtMaKH.getText()));
         model.setTenKH(txtTenKH.getText());
         model.setSoDT(Integer.valueOf(txtSoDT.getText()));
         model.setNgaySinh(DateHelper.toDate(txtNgaySinh.getText()));
