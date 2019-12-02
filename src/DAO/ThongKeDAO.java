@@ -5,12 +5,44 @@
  */
 package DAO;
 
+import JDBC.JdbcHelper;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
  * @author Admin
  */
 public class ThongKeDAO {
-     
+    public List<Object[]> getDoanhThuTheoNgay(int Ngay) {
+        List<Object[]> list = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "{call sp_ThongKeDoanhThu(?)}";
+                rs = JdbcHelper.executeQuery(sql, Ngay);
+                while (rs.next()) {
+                    Object[] model = {
+                        rs.getString("CHUYENDE"),
+                        rs.getInt("SoKH"),
+                        rs.getInt("SoHV"),
+                        rs.getDouble("DoanhThu"),
+                        rs.getDouble("ThapNhat"),
+                        rs.getDouble("CaoNhat"),
+                        rs.getDouble("TrungBinh")
+                    };
+                    list.add(model);
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }  
     
 }

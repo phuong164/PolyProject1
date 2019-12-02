@@ -20,6 +20,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setTitle("Đăng Nhập");
+        this.setLocationRelativeTo(null);
     }
 
     NhanVienDao dao = new NhanVienDao();
