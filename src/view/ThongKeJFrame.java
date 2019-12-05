@@ -5,12 +5,20 @@
  */
 package view;
 
+import DAO.ThongKeDAO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class ThongKeJFrame extends javax.swing.JFrame {
 
+    ThongKeDAO dao = new ThongKeDAO();
+    
     /**
      * Creates new form ThongKeJFrame
      */
@@ -19,8 +27,44 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         this.setTitle("Thống Kê Doanh Thu ");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        init();
+    }
+   void init(){
+       fillComboBoxThoiGian();
+       fillTableDoanhThu();
+   }
+void fillComboBoxThoiGian() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboThoiGian.getModel();
+        model.removeAllElements();
+        try {
+            List<String> list = new ArrayList<>();
+            list.add("Năm");
+            list.add("Ngày");
+            for (String thoiGian : list) {
+                model.addElement(thoiGian);
+            }
+        } catch (Exception e) {
+        }
     }
 
+    void fillTableDoanhThu() {
+        DefaultTableModel model = (DefaultTableModel) TblgridDay.getModel();
+        model.setRowCount(0);
+        try {
+            if (cboThoiGian.getSelectedItem().equals("Năm")) {
+                List<Object[]> list = dao.getDoanhThuNam();
+                for (Object[] objects : list) {
+                    model.addRow(objects);
+                }
+            } else {
+                List<Object[]> list = dao.getDoanhThuThang();
+                for (Object[] objects : list) {
+                    model.addRow(objects);
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,7 +84,7 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TblgridDay = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        cboThoiGian = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TblgridMonth = new javax.swing.JTable();
@@ -65,20 +109,34 @@ public class ThongKeJFrame extends javax.swing.JFrame {
 
         TblgridDay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Thời gian", "Số lượng giao dịch", "Doanh thu thấp nhất", "Doanh thu cao nhất", "Doanh thu trung bình", "Tổng doanh thu"
+                "Thời gian", "Tổng doanh thu"
             }
         ));
+        TblgridDay.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                TblgridDayAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane2.setViewportView(TblgridDay);
 
         jLabel2.setText("Thống kê theo:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NGÀY", "THÁNG" }));
+        cboThoiGian.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NGÀY", "THÁNG" }));
+        cboThoiGian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboThoiGianActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -91,7 +149,7 @@ public class ThongKeJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(cboThoiGian, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -100,7 +158,7 @@ public class ThongKeJFrame extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboThoiGian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(27, Short.MAX_VALUE))
@@ -188,6 +246,14 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TblgridDayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_TblgridDayAncestorAdded
+        
+    }//GEN-LAST:event_TblgridDayAncestorAdded
+
+    private void cboThoiGianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboThoiGianActionPerformed
+        fillComboBoxThoiGian();
+    }//GEN-LAST:event_cboThoiGianActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -226,7 +292,7 @@ public class ThongKeJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TblgridDay;
     private javax.swing.JTable TblgridMonth;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox cboThoiGian;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

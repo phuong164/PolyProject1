@@ -6,7 +6,7 @@
 package view;
 
 /**
- *
+ *NV001 n
  * @author ADMIN
  */
 public class Main extends javax.swing.JFrame {
