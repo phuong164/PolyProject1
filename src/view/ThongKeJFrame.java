@@ -39,7 +39,8 @@ void fillComboBoxThoiGian() {
         try {
             List<String> list = new ArrayList<>();
             list.add("Năm");
-            list.add("Ngày");
+            list.add("Tháng");
+//            list.add("Ngày");
             for (String thoiGian : list) {
                 model.addElement(thoiGian);
             }
@@ -56,7 +57,7 @@ void fillComboBoxThoiGian() {
                 for (Object[] objects : list) {
                     model.addRow(objects);
                 }
-            } else {
+            } else if (cboThoiGian.getSelectedItem().equals("Tháng")){
                 List<Object[]> list = dao.getDoanhThuThang();
                 for (Object[] objects : list) {
                     model.addRow(objects);
@@ -103,6 +104,11 @@ void fillComboBoxThoiGian() {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Thống Kê Doanh Thu");
@@ -131,7 +137,6 @@ void fillComboBoxThoiGian() {
 
         jLabel2.setText("Thống kê theo:");
 
-        cboThoiGian.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NGÀY", "THÁNG" }));
         cboThoiGian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboThoiGianActionPerformed(evt);
@@ -168,13 +173,13 @@ void fillComboBoxThoiGian() {
 
         TblgridMonth.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Doanh thu theo tháng", "Chi tiêu theo tháng", "Lợi nhuận"
+                "Thời gian", "Tổng doanh thu"
             }
         ));
         jScrollPane3.setViewportView(TblgridMonth);
@@ -253,6 +258,11 @@ void fillComboBoxThoiGian() {
     private void cboThoiGianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboThoiGianActionPerformed
         fillComboBoxThoiGian();
     }//GEN-LAST:event_cboThoiGianActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        fillComboBoxThoiGian();
+        fillTableDoanhThu();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

@@ -50,7 +50,7 @@ public class ThongKeDAO {
                 rs = JdbcHelper.executeQuery(sql);
                 while (rs.next()) {
                     Object[] model = {
-                        rs.getDate(1),
+                        rs.getInt(1),
                         rs.getInt(2)
                     };
                     list.add(model);
