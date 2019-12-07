@@ -28,7 +28,7 @@ public class MenuDao {
     }
 
     public void update(Menu model) {
-        String sql = "UPDATE MENU SET tenSP=?, gia=?, hinh=? WHERE maSP=?";
+        String sql = "UPDATE MENU SET tenSP = ?, gia = ?, hinh = ? WHERE maSP = ?";
         JdbcHelper.executeUpdate(sql,
                 model.getTenSP(),
                 model.getGia(),
@@ -36,9 +36,9 @@ public class MenuDao {
                 model.getMaSP());
     }
 
-    public void delete(String MaNV) {
+    public void delete(String MaSP) {
         String sql = "DELETE FROM MENU WHERE maSP=?";
-        JdbcHelper.executeUpdate(sql, MaNV);
+        JdbcHelper.executeUpdate(sql, MaSP);
     }
 
     public List<Menu> select() {

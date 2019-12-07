@@ -45,12 +45,18 @@ public class NhanVienDao {
         String sql = "SELECT * FROM NHANVIEN";
         return select(sql);
     }
+     public List<NhanVien> selectByName() {
+        String sql = "SELECT hoTen FROM NHANVIEN";
+        return select(sql);
+    }
 
     public NhanVien findById(String manv) {
         String sql = "SELECT * FROM NHANVIEN WHERE maNV=?";
         List<NhanVien> list = select(sql, manv);
         return list.size() > 0 ? list.get(0) : null;
     }
+
+
 
     private List<NhanVien> select(String sql, Object... args) {
         List<NhanVien> list = new ArrayList<>();

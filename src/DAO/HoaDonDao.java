@@ -10,54 +10,58 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Menu;
+import model.HoaDon;
 
 /**
  *
  * @author ADMIN
  */
 public class HoaDonDao {
-    public void insert(Menu model) {
-        String sql = "INSERT INTO MENU (maSP, tenSP, gia, hinh) VALUES (?, ?, ?, ?)";
+
+    public void insert(HoaDon model) {
+        String sql = "INSERT INTO HOADON (maHD,maNV, maKH, thanhTien, ngayXuatHD) VALUES (?, ?, ?, ?, ?)";
         JdbcHelper.executeUpdate(sql,
-                model.getMaSP(),
-                model.getTenSP(),
-                model.getGia(),
-                model.getHinh());
+                model.getMaHD(),
+                model.getMaNV(),
+                model.getMaKH(),
+                model.getThanhTien(),
+                model.getNgayXuatHD());
     }
 
-    public void update(Menu model) {
-        String sql = "UPDATE MENU SET tenSP=?, gia=?, hinh=? WHERE maSP=?";
+    public void update(HoaDon model) {
+        String sql = "UPDATE HOADON SET maNV=?, maKH=?, thanhTien=? ngayXuatHD=? WHERE maHD=?";
         JdbcHelper.executeUpdate(sql,
-                model.getTenSP(),
-                model.getGia(),
-                model.getHinh(),
-                model.getMaSP());
+                model.getMaNV(),
+                model.getMaKH(),
+                model.getThanhTien(),
+                model.getNgayXuatHD(),
+                model.getMaHD());
     }
 
-    public void delete(String MaNV) {
-        String sql = "DELETE FROM MENU WHERE maSP=?";
-        JdbcHelper.executeUpdate(sql, MaNV);
+    public void delete(String MaHD) {
+        String sql = "DELETE FROM HOADON WHERE maHD=?";
+        JdbcHelper.executeUpdate(sql, MaHD);
     }
 
-    public List<Menu> select() {
-        String sql = "SELECT * FROM MENU";
+     public HoaDon findById(String mahd) {
+        String sql = "SELECT * FROM HOADON WHERE maHD=?";
+        List<HoaDon> list = select(sql, mahd);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+    public List<HoaDon> select() {
+        String sql = "SELECT * FROM HOADON";
         return select(sql);
     }
 
-    public List<Menu> selectByKeyword(String keyword) {
-        String sql = "SELECT * FROM MENU WHERE tenSP LIKE ?";
-        return select(sql, "%" + keyword + "%");
-    }
-
-    private List<Menu> select(String sql, Object... args) {
-        List<Menu> list = new ArrayList<>();
+    private List<HoaDon> select(String sql, Object... args) {
+        List<HoaDon> list = new ArrayList<>();
         try {
             ResultSet rs = null;
             try {
                 rs = JdbcHelper.executeQuery(sql, args);
                 while (rs.next()) {
-                    Menu model = readFromResultSet(rs);
+                    HoaDon model = readFromResultSet(rs);
                     list.add(model);
                 }
             } finally {
@@ -69,12 +73,13 @@ public class HoaDonDao {
         return list;
     }
 
-    private Menu readFromResultSet(ResultSet rs) throws SQLException {
-        Menu model = new Menu();
-        model.setMaSP(rs.getString("MaSP"));
-        model.setTenSP(rs.getString("TenSP"));
-        model.setGia(rs.getFloat("Gia"));
-        model.setHinh(rs.getString("Hinh"));
+    private HoaDon readFromResultSet(ResultSet rs) throws SQLException {
+        HoaDon model = new HoaDon();
+        model.setMaHD(rs.getString("MaHD"));
+        model.setMaNV(rs.getString("MaNV"));
+        model.setMaKH(rs.getInt("MaKH"));
+        model.setThanhTien(rs.getFloat("ThanhTien"));
+        model.setNgayXuatHD(rs.getDate("NgayXuatHD"));
         return model;
     }
 }

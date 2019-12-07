@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author ADMIN
@@ -13,19 +15,20 @@ public class HoaDon {
     private String maHD;
     private String maNV;
     private int maKH;
-    private Menu menu;
     private Float thanhTien;
+    private Date ngayXuatHD;
 
     public HoaDon() {
     }
 
-    public HoaDon(String maHD, String maNV, int maKH, Menu menu, Float thanhTien) {
+    public HoaDon(String maHD, String maNV, int maKH, Float thanhTien, Date ngayXuatHD) {
         this.maHD = maHD;
         this.maNV = maNV;
         this.maKH = maKH;
-        this.menu = menu;
         this.thanhTien = thanhTien;
+        this.ngayXuatHD = ngayXuatHD;
     }
+
 
     public String getMaHD() {
         return maHD;
@@ -51,14 +54,6 @@ public class HoaDon {
         this.maKH = maKH;
     }
 
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
     public Float getThanhTien() {
         return thanhTien;
     }
@@ -67,6 +62,12 @@ public class HoaDon {
         this.thanhTien = thanhTien;
     }
 
-    
+    public Date getNgayXuatHD() {
+        return ngayXuatHD;
+    }
+
+    public void setNgayXuatHD(Date ngayXuatHD) {
+        this.ngayXuatHD = ngayXuatHD;
+    }
     
 }

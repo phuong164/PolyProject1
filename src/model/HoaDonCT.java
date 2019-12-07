@@ -9,20 +9,21 @@ package model;
  *
  * @author ADMIN
  */
-public class Menu {
+public class HoaDonCT {
+
     private String maSP;
     private String tenSP;
+    private int soLuong;
     private Float gia;
-    private String hinh;
 
-    public Menu() {
+    public HoaDonCT() {
     }
 
-    public Menu(String maSP, String tenSP, Float gia, String hinh) {
+    public HoaDonCT(String maSP, String tenSP, int soLuong, Float gia) {
         this.maSP = maSP;
         this.tenSP = tenSP;
+        this.soLuong = soLuong;
         this.gia = gia;
-        this.hinh = hinh;
     }
 
 
@@ -39,9 +40,16 @@ public class Menu {
         return tenSP;
     }
 
-
     public void setTenSP(String tenSP) {
         this.tenSP = tenSP;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
     }
 
     public Float getGia() {
@@ -51,13 +59,6 @@ public class Menu {
     public void setGia(Float gia) {
         this.gia = gia;
     }
-
-    public String getHinh() {
-        return hinh;
-    }
-
-    public void setHinh(String hinh) {
-        this.hinh = hinh;
-    }
+    
     
 }
