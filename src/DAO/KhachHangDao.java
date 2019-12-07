@@ -18,7 +18,6 @@ import model.KhachHang;
  */
 public class KhachHangDao {
 
-
     public void insert(KhachHang model) {
         String sql = "INSERT INTO KHACHHANG (maKH,tenKH,soDT,ngaySinh,diemTL) VALUES (?, ?, ?, ?,?)";
         JdbcHelper.executeUpdate(sql,
@@ -41,7 +40,7 @@ public class KhachHangDao {
     }
 
     public void delete(int MaKH) {
-        String sql = "DELETE FROM KHACHHANG WHERE maKH=?";
+        String sql = "DELETE * FROM KHACHHANG WHERE maKH=?";
         JdbcHelper.executeUpdate(sql, MaKH);
     }
 
@@ -81,6 +80,8 @@ public class KhachHangDao {
         model.setTenKH(rs.getString("TenKH"));
         model.setSoDT(rs.getInt("SoDT"));
         model.setNgaySinh(rs.getDate("NgaySinh"));
+        model.setDiem(rs.getInt("DiemTL"));
         return model;
     }
+
 }

@@ -42,6 +42,7 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
             List<NguyenLieu> list = dao.select();
             for (NguyenLieu nl : list) {
                 Object[] row = {
+                    nl.getMaNL(),
                     nl.getTenNL(),
                     nl.getSoLuong(),
                     nl.getDonGia(),
@@ -56,9 +57,6 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
 
     void insert() {
         NguyenLieu model = getModel();
-
-        String confirm = new String(txtTenNL.getName());
-        if (confirm.equals(model.getTenNL())) {
             try {
                 dao.insert(model);
                 this.load();
@@ -67,9 +65,7 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
             } catch (Exception e) {
                 DialogHelper.alert(this, "Thêm mới thất bại!");
             }
-        } else {
-            DialogHelper.alert(this, "Xác nhận mật khẩu không đúng!");
-        }
+
     }
 
     void delete() {
@@ -102,26 +98,21 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
     void update() {
         NguyenLieu model = getModel();
 
-        String confirm = new String(txtTenNL.getName());
-        if (!confirm.equals(model.getTenNL())) {
-            DialogHelper.alert(this, "Xác nhận mật khẩu không đúng!");
-        } else {
-            try {
-                dao.update(model);
-                this.load();
-                DialogHelper.alert(this, "Cập nhật thành công!");
-            } catch (Exception e) {
-                DialogHelper.alert(this, "Cập nhật thất bại!");
-            }
+        try {
+            dao.update(model);
+            this.load();
+            DialogHelper.alert(this, "Cập nhật thành công!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Cập nhật thất bại!");
         }
     }
-
     void clear() {
         this.setModel(new NguyenLieu());
         this.setStatus(true);
     }
 
     void setModel(NguyenLieu model) {
+        txtMaNL.setText(model.getMaNL());
         txtTenNL.setText(model.getTenNL());
         txtSoLuong.setText(String.valueOf(model.getSoLuong()));
         txtDonGia.setText(String.valueOf(model.getDonGia()));
@@ -131,6 +122,7 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
 
     NguyenLieu getModel() {
         NguyenLieu model = new NguyenLieu();
+        model.setMaNL(txtMaNL.getText());
         model.setTenNL(txtTenNL.getText());
         model.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
         model.setDonGia(Float.valueOf(txtDonGia.getText()));
@@ -139,7 +131,7 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
     }
 
     void setStatus(boolean insertable) {
-        txtTenNL.setEditable(insertable);
+        txtMaNL.setEditable(insertable);
         btnAdd.setEnabled(insertable);
         btnEdit.setEnabled(!insertable);
         btnDelete.setEnabled(!insertable);
@@ -151,6 +143,58 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
         btnNext.setEnabled(!insertable && last);
         btnLast.setEnabled(!insertable && last);
     }
+         private boolean checknull() {
+        if (txtMaNL.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để trống mã");
+            txtMaNL.requestFocus();
+            return false;
+        }
+        if (txtTenNL.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để trống Họ tên");
+            txtTenNL.requestFocus();
+            return false;
+        }
+        
+        if (txtSoLuong.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để trống Số lượng");
+            txtSoLuong.requestFocus();
+            return false;
+        }
+        if (txtDonGia.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để trống Giá");
+            txtDonGia.requestFocus();
+            return false;
+        }
+        if (txtNhaCC.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để Nhà cung cấp");
+            txtNhaCC.requestFocus();
+            return false;
+        }
+
+        return true;
+
+    }
+
+        public boolean checkten() {
+        String regex = "^[\\p{L}\\s]+$";
+        if (!txtTenNL.getText().matches(regex)) {
+            DialogHelper.alert(this, "Họ tên không được chứa số !");
+            return false;
+            }
+        return true;
+
+    }
+
+    public boolean CHECKID() {
+       String maNL = new String(txtMaNL.getText());
+        if (dao.findById(maNL) != null) {
+            DialogHelper.alert(null, "Bị trùng mã");
+            return false;
+        }
+        return true;
+    }
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -179,6 +223,8 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
         btnPrevious = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         btnLast = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtMaNL = new javax.swing.JTextField();
         pnlList = new javax.swing.JPanel();
         btnFind = new javax.swing.JButton();
         txtFind = new javax.swing.JTextField();
@@ -277,6 +323,9 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel1.setText("Mã nguyên liệu:");
+
         javax.swing.GroupLayout pnlEditLayout = new javax.swing.GroupLayout(pnlEdit);
         pnlEdit.setLayout(pnlEditLayout);
         pnlEditLayout.setHorizontalGroup(
@@ -288,7 +337,7 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
                 .addComponent(btnEdit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDelete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(btnfirst)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPrevious)
@@ -300,6 +349,7 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
             .addGroup(pnlEditLayout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
                     .addComponent(lblNhaCC)
                     .addComponent(lblDonGia)
                     .addComponent(lblSoLuong)
@@ -309,13 +359,18 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
                     .addComponent(txtTenNL)
                     .addComponent(txtSoLuong)
                     .addComponent(txtDonGia)
-                    .addComponent(txtNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(149, Short.MAX_VALUE))
+                    .addComponent(txtNhaCC, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                    .addComponent(txtMaNL))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlEditLayout.setVerticalGroup(
             pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEditLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(18, 18, 18)
+                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtMaNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTenNL)
                     .addComponent(txtTenNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -331,16 +386,17 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNhaCC)
                     .addComponent(txtNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd)
-                    .addComponent(btnEdit)
-                    .addComponent(btnDelete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnfirst)
                         .addComponent(btnPrevious)
                         .addComponent(btnNext)
-                        .addComponent(btnLast)))
+                        .addComponent(btnLast))
+                    .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdd)
+                        .addComponent(btnEdit)
+                        .addComponent(btnDelete)))
                 .addGap(25, 25, 25))
         );
 
@@ -350,26 +406,37 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
 
         tblGrid.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Tên nguyên liệu", "Số lượng", "Đơn giá", "Nhà cung cấp"
+                "Mã nguyên liệu", "Tên nguyên liệu", "Số lượng", "Đợn giá", "Nhà cung cấp"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblGrid.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblGridMouseClicked(evt);
@@ -384,12 +451,12 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
             .addGroup(pnlListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(pnlListLayout.createSequentialGroup()
+                        .addGap(0, 262, Short.MAX_VALUE)
                         .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnFind))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         pnlListLayout.setVerticalGroup(
@@ -401,9 +468,8 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
                     .addGroup(pnlListLayout.createSequentialGroup()
                         .addComponent(txtFind)
                         .addGap(6, 6, 6)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(182, 182, 182))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("DANH SÁCH", pnlList);
@@ -446,12 +512,13 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
     }//GEN-LAST:event_txtDonGiaActionPerformed
 
     private void btnAddAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_btnAddAncestorMoved
-        // TODO add your handling code here:
+           
     }//GEN-LAST:event_btnAddAncestorMoved
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        insert();
+         if (checknull() && CHECKID() && checkten()) {
+            insert();}
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -488,9 +555,15 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
         this.edit();
     }//GEN-LAST:event_btnLastActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.load();
+        this.setStatus(true);
+    }//GEN-LAST:event_formWindowOpened
+
     private void tblGridMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridMouseClicked
         // TODO add your handling code here:
-         if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() == 2) {
             this.index = tblGrid.rowAtPoint(evt.getPoint());
             if (this.index >= 0) {
                 this.edit();
@@ -498,12 +571,6 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
             }
         }
     }//GEN-LAST:event_tblGridMouseClicked
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
-        this.load();
-        this.setStatus(true);
-    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -531,6 +598,9 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
             java.util.logging.Logger.getLogger(NguyenLieuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
 
         /* Create and display the dialog */
@@ -557,6 +627,7 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
     private javax.swing.JButton btnfirst;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -570,6 +641,7 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
     private javax.swing.JTable tblGrid;
     private javax.swing.JTextField txtDonGia;
     private javax.swing.JTextField txtFind;
+    private javax.swing.JTextField txtMaNL;
     private javax.swing.JTextField txtNhaCC;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTenNL;

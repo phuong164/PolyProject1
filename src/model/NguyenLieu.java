@@ -12,7 +12,8 @@ import java.io.Serializable;
  * @author OS
  */
 public class NguyenLieu implements Serializable {
-
+    
+    private String maNL;
     private String tenNL;
     private int soLuong;
     private float donGia;
@@ -21,11 +22,8 @@ public class NguyenLieu implements Serializable {
     public NguyenLieu() {
     }
 
-    public NguyenLieu(String tenNL, int soLuong, float donGia, String nCC) {
-        this.tenNL = tenNL;
-        this.soLuong = soLuong;
-        this.donGia = donGia;
-        this.nCC = nCC;
+    public void setMaNL(String maNL) {
+        this.maNL = maNL;
     }
 
     public void setTenNL(String tenNL) {
@@ -44,6 +42,10 @@ public class NguyenLieu implements Serializable {
         this.nCC = nCC;
     }
 
+    public String getMaNL() {
+        return maNL;
+    }
+
     public String getTenNL() {
         return tenNL;
     }
@@ -59,5 +61,6 @@ public class NguyenLieu implements Serializable {
     public String getnCC() {
         return nCC;
     }
+
 
 }

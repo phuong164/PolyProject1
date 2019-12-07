@@ -10,6 +10,7 @@ import JDBC.DateHelper;
 import JDBC.DialogHelper;
 import JDBC.ShareHelper;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
 
@@ -58,9 +59,6 @@ public class KhachHangJDialog extends javax.swing.JDialog {
 
     void insert() {
         KhachHang model = getModel();
-
-        String confirm = new String(txtMaKH.getName());
-        if (confirm.equals(model.getMaKH())) {
             try {
                 dao.insert(model);
                 this.load();
@@ -69,9 +67,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
             } catch (Exception e) {
                 DialogHelper.alert(this, "Thêm mới thất bại!");
             }
-        } else {
-            DialogHelper.alert(this, "Xác nhận mật khẩu không đúng!");
-        }
+
     }
 
     void delete() {
@@ -104,17 +100,12 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     void update() {
         KhachHang model = getModel();
 
-        String confirm = new String(txtMaKH.getName());
-        if (!confirm.equals(model.getMaKH())) {
-            DialogHelper.alert(this, "Xác nhận mã khách hàng không đúng!");
-        } else {
-            try {
-                dao.update(model);
-                this.load();
-                DialogHelper.alert(this, "Cập nhật thành công!");
-            } catch (Exception e) {
-                DialogHelper.alert(this, "Cập nhật thất bại!");
-            }
+        try {
+            dao.update(model);
+            this.load();
+            DialogHelper.alert(this, "Cập nhật thành công!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Cập nhật thất bại!");
         }
     }
 
@@ -155,6 +146,61 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         btnPrevious.setEnabled(!insertable && first);
         btnNext.setEnabled(!insertable && last);
         btnLast.setEnabled(!insertable && last);
+    }
+     private boolean checknull() {
+        if (txtMaKH.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để trống mã");
+            txtMaKH.requestFocus();
+            return false;
+        }
+        if (txtTenKH.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để trống Họ tên");
+            txtTenKH.requestFocus();
+            return false;
+        }
+        
+        if (txtSoDT.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để trống Số Điện thoại");
+            txtSoDT.requestFocus();
+            return false;
+        }
+        if (txtNgaySinh.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để trống Ngày Sinh");
+            txtNgaySinh.requestFocus();
+            return false;
+        }
+        if (txtDiemTL.getText().isEmpty()) {
+            DialogHelper.alert(null, "Không để trống Điểm");
+            txtDiemTL.requestFocus();
+            return false;
+        }
+
+        return true;
+
+    }
+
+        public boolean checkten() {
+        String regex = "^[\\p{L}\\s]+$";
+        if (!txtTenKH.getText().matches(regex)) {
+            DialogHelper.alert(this, "Họ tên không được chứa số !");
+            return false;
+        }
+           String sdtPattern = "0\\d{9,10}$";
+            if (!txtSoDT.getText().matches(sdtPattern)) {
+                DialogHelper.alert(this,"SDT phải bắt đầu bằng số 0 và từ 10-11 số");
+                
+            }
+        return true;
+
+    }
+
+    public boolean CHECKID() {
+       int maKH = new Integer(txtMaKH.getText());
+        if (dao.findById(maKH) != null) {
+            DialogHelper.alert(null, "Bị trùng mã");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -288,7 +334,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 .addComponent(btnLast)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditLayout.createSequentialGroup()
-                .addContainerGap(112, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTenKH, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblSoDT, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -363,7 +409,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Ngày sinh", "Điểm Tích"
+                "MaKH", "TenKH", "SoDT", "NgaySinh", "DiemTL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -401,7 +447,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
             .addGroup(pnlListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
                     .addGroup(pnlListLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -461,7 +507,8 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFindActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        insert();
+        if (checknull() && CHECKID() && checkten()) {
+            insert();}
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -488,8 +535,8 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
-        this.index = tblGrid.getRowCount() - 1;
-        this.edit();
+        if (checknull() && CHECKID() && checkten()) {
+            insert();}
     }//GEN-LAST:event_btnLastActionPerformed
 
     private void tblGridMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridMouseClicked
@@ -534,6 +581,14 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(KhachHangJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
