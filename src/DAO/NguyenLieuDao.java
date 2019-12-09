@@ -76,11 +76,11 @@ public class NguyenLieuDao {
 
     private NguyenLieu readFromResultSet(ResultSet rs) throws SQLException {
         NguyenLieu model = new NguyenLieu();
-        model.setMaNL(rs.getString("maNL"));
-        model.setTenNL(rs.getString("tenNL"));
-        model.setSoLuong(rs.getInt("soLuong"));
-        model.setDonGia(rs.getFloat("donGia"));
-        model.setnCC(rs.getString("nCC"));
+        model.setMaNL(rs.getString("MaNL"));
+        model.setTenNL(rs.getString("TenNL"));
+        model.setSoLuong(rs.getInt("SoLuong"));
+        model.setDonGia(rs.getFloat("DonGia"));
+        model.setnCC(rs.getString("NCC"));
         return model;
     }
 }

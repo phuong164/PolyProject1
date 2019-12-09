@@ -39,9 +39,9 @@ public class KhachHangDao {
         );
     }
 
-    public void delete(int MaKH) {
-        String sql = "DELETE * FROM KHACHHANG WHERE maKH=?";
-        JdbcHelper.executeUpdate(sql, MaKH);
+    public void delete(int maKH) {
+        String sql = "DELETE FROM KHACHHANG WHERE maKH=?";
+        JdbcHelper.executeUpdate(sql, maKH);
     }
 
     public List<KhachHang> select() {
@@ -83,5 +83,4 @@ public class KhachHangDao {
         model.setDiem(rs.getInt("DiemTL"));
         return model;
     }
-
 }

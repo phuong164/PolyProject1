@@ -10,7 +10,6 @@ import JDBC.DateHelper;
 import JDBC.DialogHelper;
 import JDBC.ShareHelper;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
 

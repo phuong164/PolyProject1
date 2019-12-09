@@ -27,7 +27,7 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
         this.setTitle("Quản Lý Nguyên Liệu");
         setLocationRelativeTo(null);
     }
-int index = 0; // vị trí của nhân viên đang hiển thị trên form 
+    int index = 0;
     NguyenLieuDao dao = new NguyenLieuDao();
 
     void init() {
@@ -70,7 +70,7 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
 
     void delete() {
         if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa nguyên liệu này?")) {
-            String manl = txtTenNL.getText();
+            String manl = txtMaNL.getText();
             try {
                 dao.delete(manl);
                 this.load();
@@ -597,6 +597,18 @@ int index = 0; // vị trí của nhân viên đang hiển thị trên form
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(NguyenLieuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

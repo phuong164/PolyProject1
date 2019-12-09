@@ -15,7 +15,7 @@ public class JdbcHelper {
     public static String driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
     public static String dburl = "jdbc:sqlserver://localhost:1433;databaseName=DUAN1;";   
     public static String username="sa";  
-    public static String password="123456";   
+    public static String password="123";   
  
     static{ 
         try {            
@@ -55,7 +55,6 @@ public class JdbcHelper {
             e.printStackTrace();
         }     
     }    
-       
     public static ResultSet executeQuery(String sql, Object...args) {      
         try {          
             PreparedStatement stmt = prepareStatement(sql, args);     

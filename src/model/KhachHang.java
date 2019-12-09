@@ -14,61 +14,64 @@ import java.util.Date;
  */
 public class KhachHang implements Serializable {
 
-    private int MaKH;
-    private String TenKH;
-    private int SoDT;
-    private Date NgaySinh;
-    private int Diem;
+    private int maKH;
+    private String tenKH;
+    private int soDT;
+    private Date ngaySinh;
+    private int diem;
 
     public KhachHang() {
     }
 
-    public KhachHang(int MaKH, String TenKH, int SoDT, Date NgaySinh, int Diem) {
-        this.MaKH = MaKH;
-        this.TenKH = TenKH;
-        this.SoDT = SoDT;
-        this.NgaySinh = NgaySinh;
-        this.Diem = Diem;
+    public KhachHang(int maKH, String tenKH, int soDT, Date ngaySinh, int diem) {
+        this.maKH = maKH;
+        this.tenKH = tenKH;
+        this.soDT = soDT;
+        this.ngaySinh = ngaySinh;
+        this.diem = diem;
     }
 
     public int getMaKH() {
-        return MaKH;
+        return maKH;
+    }
+
+    public void setMaKH(int maKH) {
+        this.maKH = maKH;
     }
 
     public String getTenKH() {
-        return TenKH;
+        return tenKH;
+    }
+
+    public void setTenKH(String tenKH) {
+        this.tenKH = tenKH;
     }
 
     public int getSoDT() {
-        return SoDT;
+        return soDT;
+    }
+
+    public void setSoDT(int soDT) {
+        this.soDT = soDT;
     }
 
     public Date getNgaySinh() {
-        return NgaySinh;
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
     }
 
     public int getDiem() {
-        return Diem;
+        return diem;
     }
 
-    public void setMaKH(int MaKH) {
-        this.MaKH = MaKH;
+    public void setDiem(int diem) {
+        this.diem = diem;
     }
 
-    public void setTenKH(String TenKH) {
-        this.TenKH = TenKH;
-    }
-
-    public void setSoDT(int SoDT) {
-        this.SoDT = SoDT;
-    }
-
-    public void setNgaySinh(Date NgaySinh) {
-        this.NgaySinh = NgaySinh;
-    }
-
-    public void setDiem(int Diem) {
-        this.Diem = Diem;
-    }
-
+   
+    
+    
 }
