@@ -226,8 +226,6 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtMaNL = new javax.swing.JTextField();
         pnlList = new javax.swing.JPanel();
-        btnFind = new javax.swing.JButton();
-        txtFind = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblGrid = new javax.swing.JTable();
 
@@ -402,8 +400,6 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("CẬP NHẬT", pnlEdit);
 
-        btnFind.setText("Find");
-
         tblGrid.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -450,26 +446,15 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
             pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlListLayout.createSequentialGroup()
-                        .addGap(0, 262, Short.MAX_VALUE)
-                        .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnFind))
-                    .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlListLayout.setVerticalGroup(
             pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlListLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnFind)
-                    .addGroup(pnlListLayout.createSequentialGroup()
-                        .addComponent(txtFind)
-                        .addGap(6, 6, 6)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListLayout.createSequentialGroup()
+                .addContainerGap(65, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("DANH SÁCH", pnlList);
@@ -598,21 +583,7 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(NguyenLieuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+
 
 
         /* Create and display the dialog */
@@ -634,7 +605,6 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnFind;
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
@@ -652,7 +622,6 @@ public class NguyenLieuJDialog extends javax.swing.JDialog {
     private javax.swing.JPanel pnlList;
     private javax.swing.JTable tblGrid;
     private javax.swing.JTextField txtDonGia;
-    private javax.swing.JTextField txtFind;
     private javax.swing.JTextField txtMaNL;
     private javax.swing.JTextField txtNhaCC;
     private javax.swing.JTextField txtSoLuong;

@@ -78,7 +78,7 @@ public class KhachHangDao {
         KhachHang model = new KhachHang();
         model.setMaKH(rs.getInt("MaKH"));
         model.setTenKH(rs.getString("TenKH"));
-        model.setSoDT(rs.getInt("SoDT"));
+        model.setSoDT(rs.getString("SoDT"));
         model.setNgaySinh(rs.getDate("NgaySinh"));
         model.setDiem(rs.getInt("DiemTL"));
         return model;

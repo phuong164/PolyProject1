@@ -16,14 +16,14 @@ public class KhachHang implements Serializable {
 
     private int maKH;
     private String tenKH;
-    private int soDT;
+    private String soDT;
     private Date ngaySinh;
     private int diem;
 
     public KhachHang() {
     }
 
-    public KhachHang(int maKH, String tenKH, int soDT, Date ngaySinh, int diem) {
+    public KhachHang(int maKH, String tenKH, String soDT, Date ngaySinh, int diem) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.soDT = soDT;
@@ -47,11 +47,11 @@ public class KhachHang implements Serializable {
         this.tenKH = tenKH;
     }
 
-    public int getSoDT() {
+    public String getSoDT() {
         return soDT;
     }
 
-    public void setSoDT(int soDT) {
+    public void setSoDT(String soDT) {
         this.soDT = soDT;
     }
 
