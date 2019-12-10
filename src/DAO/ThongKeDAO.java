@@ -17,49 +17,81 @@ import java.util.List;
  * @author Admin
  */
 public class ThongKeDAO {
-    
-   public List<Object[]> getDoanhThuNam() {
+     public List<Object[]> getDoanhThu() {
         List<Object[]> list = new ArrayList<>();
         try {
             ResultSet rs = null;
             try {
-                String sql = "{call sp_ThongKeDoanhThu}";
+                String sql = "exec sp_ThongKeDoanhThuNam";
                 rs = JdbcHelper.executeQuery(sql);
                 while (rs.next()) {
                     Object[] model = {
-                        rs.getInt(1),
-                        rs.getInt(2)
+                        rs.getInt("Nam"),
+                        rs.getInt("SoLuong"),
+                        rs.getFloat("TongTien"),
                     };
                     list.add(model);
                 }
             } finally {
-                rs.getStatement().getConnection().close();
+                if(rs != null && rs.getStatement() != null) {
+                    rs.getStatement().getConnection().close();
+                }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
         return list;
     }
 
-    public List<Object[]> getDoanhThuThang() {
+   
+     public List<Object[]> getDoanhThuThang() {
         List<Object[]> list = new ArrayList<>();
         try {
             ResultSet rs = null;
             try {
-                String sql = "{call sp_ThongKeDoanhThuTheoThang}";
+                String sql = "exec sp_ThongKeDoanhThuThang";
                 rs = JdbcHelper.executeQuery(sql);
                 while (rs.next()) {
                     Object[] model = {
-                        rs.getInt(1),
-                        rs.getInt(2)
+                        rs.getInt("Thang"),
+                        rs.getInt("SoLuong"),
+                        rs.getFloat("TongTien"),
                     };
                     list.add(model);
                 }
             } finally {
-                rs.getStatement().getConnection().close();
+                if(rs != null && rs.getStatement() != null) {
+                    rs.getStatement().getConnection().close();
+                }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return list;
+    }
+     
+     public List<Object[]> getDoanhThuNgay() {
+        List<Object[]> list = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "exec sp_ThongKeDoanhThuNgay";
+                rs = JdbcHelper.executeQuery(sql);
+                while (rs.next()) {
+                    Object[] model = {
+                        rs.getInt("Ngay"),
+                        rs.getInt("SoLuong"),
+                        rs.getFloat("TongTien"),
+                    };
+                    list.add(model);
+                }
+            } finally {
+                if(rs != null && rs.getStatement() != null) {
+                    rs.getStatement().getConnection().close();
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
         return list;
     }

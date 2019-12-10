@@ -18,7 +18,8 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Quản Lý Quán Trà Sữa ");
-//        new DangNhapJDialog(this, true).setVisible(true);
+         new ChaoJDialog(this, true).setVisible(true);
+        new DangNhapJDialog(this, true).setVisible(true);
     }
 
     /**
