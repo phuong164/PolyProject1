@@ -341,10 +341,10 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtSoDT)
-                    .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNgaySinh)
                     .addComponent(txtTenKH)
-                    .addComponent(txtDiemTL, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDiemTL, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                    .addComponent(txtMaKH))
                 .addGap(112, 112, 112))
         );
         pnlEditLayout.setVerticalGroup(
