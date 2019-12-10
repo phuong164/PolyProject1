@@ -5,97 +5,66 @@
  */
 package view;
 
-import DAO.HoaDonDao;
 import DAO.ThongKeDAO;
-import JDBC.ShareHelper;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
-import model.HoaDon;
-
-
 
 /**
  *
  * @author Admin
  */
 public class ThongKeJFrame extends javax.swing.JFrame {
+
     ThongKeDAO dao = new ThongKeDAO();
-    HoaDonDao hdao = new HoaDonDao();
-    int[] years = {
-        2019,2018//lấy year kiểu rg cũng đc...mà phải có year hn ms chạy
-    };    
+    
+    /**
+     * Creates new form ThongKeJFrame
+     */
     public ThongKeJFrame() {
         initComponents();
         this.setTitle("Thống Kê Doanh Thu ");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         init();
-        
     }
-
-    void init() {
-        setIconImage(ShareHelper.APP_ICON);
-        setLocationRelativeTo(null);
-    }
-    void fillComboBoxNam() {
-        DefaultComboBoxModel model = (DefaultComboBoxModel) cboNam.getModel();
+   void init(){
+       fillComboBoxThoiGian();
+       fillTableDoanhThu();
+   }
+void fillComboBoxThoiGian() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboThoiGian.getModel();
         model.removeAllElements();
-
-        List<HoaDon> list = hdao.select();
-        for (HoaDon kh : list) {
-            int nam = kh.getNgayXuatHD().getYear() + 1900;
-            if (model.getIndexOf(nam) < 0) {
-                model.addElement(nam);
+        try {
+            List<String> list = new ArrayList<>();
+            list.add("Năm");
+            list.add("Ngày");
+            for (String thoiGian : list) {
+                model.addElement(thoiGian);
             }
+        } catch (Exception e) {
         }
-
-        cboNam.setSelectedIndex(0);
     }
-    void fillComboBoxThang() {
-        DefaultComboBoxModel model = (DefaultComboBoxModel) cboThang.getModel();
-        model.removeAllElements();
 
-        List<HoaDon> list = hdao.select();
-        for (HoaDon kh : list) {
-            int thang = kh.getNgayXuatHD().getMonth()+ 1900;
-            if (model.getIndexOf(thang) < 0) {
-                model.addElement(thang);
+    void fillTableDoanhThu() {
+        DefaultTableModel model = (DefaultTableModel) TblgridDay.getModel();
+        model.setRowCount(0);
+        try {
+            if (cboThoiGian.getSelectedItem().equals("Năm")) {
+                List<Object[]> list = dao.getDoanhThu();
+                for (Object[] objects : list) {
+                    model.addRow(objects);
+                }
+            } else {
+                List<Object[]> list = dao.getDoanhThuThang();
+                for (Object[] objects : list) {
+                    model.addRow(objects);
+                }
             }
-        }
-
-        cboThang.setSelectedIndex(0);
-    }
-
-   void fillTableDoanhThu() {
-        DefaultTableModel model = (DefaultTableModel) tblNam.getModel();
-        model.setRowCount(0);
-        List<Object[]> list = dao.getDoanhThu();
-//        List<Object[]> list= dao.getDoanhThu(nam);
-        for (Object[] row : list) {
-            model.addRow(row);
+        } catch (Exception e) {
         }
     }
-   void fillTableDoanhThuThang() {
-        DefaultTableModel model = (DefaultTableModel) tblNam1.getModel();
-        model.setRowCount(0);
-        List<Object[]> list = dao.getDoanhThuThang();
-//        List<Object[]> list= dao.getDoanhThu(nam);
-        for (Object[] row : list) {
-            model.addRow(row);
-        }
-    }
-   
-     void fillTableDoanhThuNgay() {
-        DefaultTableModel model = (DefaultTableModel) tblNgay.getModel();
-        model.setRowCount(0);
-        List<Object[]> list = dao.getDoanhThuNgay();
-        for (Object[] row : list) {
-            model.addRow(row);
-        }
-    }
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,19 +80,14 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel4 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblNgay = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        cboThang = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblNam = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tblNam1 = new javax.swing.JTable();
-        cboNam = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
+        TblgridDay = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        cboThoiGian = new javax.swing.JComboBox();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TblgridMonth = new javax.swing.JTable();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -139,67 +103,40 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Thống Kê Doanh Thu");
 
-        tblNgay.setModel(new javax.swing.table.DefaultTableModel(
+        TblgridDay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Số lượng Hóa đơn ", "Sản phẩm bán ra", "Tổng tiền"
+                "Thời gian", "Tổng doanh thu"
             }
         ));
-        jScrollPane3.setViewportView(tblNgay);
-
-        jLabel3.setText("Tháng:");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(cboThang, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cboThang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Thống kê theo ngày", jPanel4);
-
-        tblNam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Năm", "Số Lượng Hóa Đơn", "Tổng doanh thu"
+        TblgridDay.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
-        ));
-        jScrollPane2.setViewportView(tblNam);
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                TblgridDayAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane2.setViewportView(TblgridDay);
+
+        jLabel2.setText("Thống kê theo:");
+
+        cboThoiGian.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NGÀY", "THÁNG" }));
+        cboThoiGian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboThoiGianActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -207,19 +144,29 @@ public class ThongKeJFrame extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(cboThoiGian, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 85, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cboThoiGian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Thống kê doanh thu năm", jPanel3);
+        jTabbedPane1.addTab("Thống kê doanh thu", jPanel3);
 
-        tblNam1.setModel(new javax.swing.table.DefaultTableModel(
+        TblgridMonth.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -227,53 +174,42 @@ public class ThongKeJFrame extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Tháng", "Số Lượng Hóa Đơn", "Tổng doanh thu"
+                "Doanh thu theo tháng", "Chi tiêu theo tháng", "Lợi nhuận"
             }
         ));
-        jScrollPane4.setViewportView(tblNam1);
+        jScrollPane3.setViewportView(TblgridMonth);
 
-        jLabel4.setText("Năm:");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(27, 27, 27)
-                        .addComponent(cboNam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(cboNam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Thống kê doanh thu thang", jPanel5);
+        jTabbedPane1.addTab("Thống kê theo tháng", jPanel4);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addComponent(jTabbedPane1))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -310,13 +246,13 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        fillTableDoanhThu();
-        fillTableDoanhThuThang();
-        fillTableDoanhThuNgay();
-        fillComboBoxNam();
-        fillComboBoxThang();
-    }//GEN-LAST:event_formWindowOpened
+    private void TblgridDayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_TblgridDayAncestorAdded
+        
+    }//GEN-LAST:event_TblgridDayAncestorAdded
+
+    private void cboThoiGianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboThoiGianActionPerformed
+        fillComboBoxThoiGian();
+    }//GEN-LAST:event_cboThoiGianActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,24 +291,19 @@ public class ThongKeJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox cboNam;
-    private javax.swing.JComboBox cboThang;
+    private javax.swing.JTable TblgridDay;
+    private javax.swing.JTable TblgridMonth;
+    private javax.swing.JComboBox cboThoiGian;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable tblNam;
-    private javax.swing.JTable tblNam1;
-    private javax.swing.JTable tblNgay;
     // End of variables declaration//GEN-END:variables
 }

@@ -58,14 +58,15 @@ public class KhachHangJDialog extends javax.swing.JDialog {
 
     void insert() {
         KhachHang model = getModel();
-            try {
-                dao.insert(model);
-                this.load();
-                this.clear();
-                DialogHelper.alert(this, "Thêm mới thành công!");
-            } catch (Exception e) {
-                DialogHelper.alert(this, "Thêm mới thất bại!");
-            }
+
+        try {
+            dao.insert(model);
+            this.load();
+            this.clear();
+            DialogHelper.alert(this, "Thêm mới thành công!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Thêm mới thất bại!");
+        }
 
     }
 
@@ -99,12 +100,17 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     void update() {
         KhachHang model = getModel();
 
-        try {
-            dao.update(model);
-            this.load();
-            DialogHelper.alert(this, "Cập nhật thành công!");
-        } catch (Exception e) {
-            DialogHelper.alert(this, "Cập nhật thất bại!");
+        String confirm = new String(txtMaKH.getName());
+        if (!confirm.equals(model.getMaKH())) {
+            DialogHelper.alert(this, "Xác nhận mã khách hàng không đúng!");
+        } else {
+            try {
+                dao.update(model);
+                this.load();
+                DialogHelper.alert(this, "Cập nhật thành công!");
+            } catch (Exception e) {
+                DialogHelper.alert(this, "Cập nhật thất bại!");
+            }
         }
     }
 
@@ -118,7 +124,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         txtTenKH.setText(model.getTenKH());
         txtSoDT.setText(String.valueOf(model.getSoDT()));
         txtNgaySinh.setText(DateHelper.toString(model.getNgaySinh()));
-        txtDiemTL.setText(String.valueOf(model.getDiem()));
+//        txtDiemTL.setText(String.valueOf(model.getDiem()));
 
     }
 
@@ -134,7 +140,8 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     }
 
     void setStatus(boolean insertable) {
-        txtMaKH.setEditable(insertable);
+        txtMaKH.setEnabled(insertable);
+        txtDiemTL.setEnabled(insertable);
         btnAdd.setEnabled(insertable);
         btnEdit.setEnabled(!insertable);
         btnDelete.setEnabled(!insertable);
@@ -145,61 +152,6 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         btnPrevious.setEnabled(!insertable && first);
         btnNext.setEnabled(!insertable && last);
         btnLast.setEnabled(!insertable && last);
-    }
-     private boolean checknull() {
-        if (txtMaKH.getText().isEmpty()) {
-            DialogHelper.alert(null, "Không để trống mã");
-            txtMaKH.requestFocus();
-            return false;
-        }
-        if (txtTenKH.getText().isEmpty()) {
-            DialogHelper.alert(null, "Không để trống Họ tên");
-            txtTenKH.requestFocus();
-            return false;
-        }
-        
-        if (txtSoDT.getText().isEmpty()) {
-            DialogHelper.alert(null, "Không để trống Số Điện thoại");
-            txtSoDT.requestFocus();
-            return false;
-        }
-        if (txtNgaySinh.getText().isEmpty()) {
-            DialogHelper.alert(null, "Không để trống Ngày Sinh");
-            txtNgaySinh.requestFocus();
-            return false;
-        }
-        if (txtDiemTL.getText().isEmpty()) {
-            DialogHelper.alert(null, "Không để trống Điểm");
-            txtDiemTL.requestFocus();
-            return false;
-        }
-
-        return true;
-
-    }
-
-        public boolean checkten() {
-        String regex = "^[\\p{L}\\s]+$";
-        if (!txtTenKH.getText().matches(regex)) {
-            DialogHelper.alert(this, "Họ tên không được chứa số !");
-            return false;
-        }
-           String sdtPattern = "0\\d{9,10}$";
-            if (!txtSoDT.getText().matches(sdtPattern)) {
-                DialogHelper.alert(this,"SDT phải bắt đầu bằng số 0 và từ 10-11 số");
-                
-            }
-        return true;
-
-    }
-
-    public boolean CHECKID() {
-       int maKH = new Integer(txtMaKH.getText());
-        if (dao.findById(maKH) != null) {
-            DialogHelper.alert(null, "Bị trùng mã");
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -235,6 +187,8 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         pnlList = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblGrid = new javax.swing.JTable();
+        txtFind = new javax.swing.JTextField();
+        btnFind = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -331,7 +285,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 .addComponent(btnLast)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(112, Short.MAX_VALUE)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTenKH, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblSoDT, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -341,10 +295,10 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtSoDT)
+                    .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNgaySinh)
                     .addComponent(txtTenKH)
-                    .addComponent(txtDiemTL, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                    .addComponent(txtMaKH))
+                    .addComponent(txtDiemTL, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(112, 112, 112))
         );
         pnlEditLayout.setVerticalGroup(
@@ -406,7 +360,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 {null, null, null, null, null}
             },
             new String [] {
-                "MaKH", "TenKH", "SoDT", "NgaySinh", "DiemTL"
+                "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Ngày sinh", "Điểm Tích"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -424,19 +378,42 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblGrid);
 
+        txtFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindActionPerformed(evt);
+            }
+        });
+
+        btnFind.setText("Find");
+        btnFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlListLayout = new javax.swing.GroupLayout(pnlList);
         pnlList.setLayout(pnlListLayout);
         pnlListLayout.setHorizontalGroup(
             pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                    .addGroup(pnlListLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFind)))
                 .addContainerGap())
         );
         pnlListLayout.setVerticalGroup(
             pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListLayout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addContainerGap()
+                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFind)
+                    .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
@@ -472,9 +449,16 @@ public class KhachHangJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFindActionPerformed
+
+    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFindActionPerformed
+
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        if (checknull() && CHECKID() && checkten()) {
-            insert();}
+        insert();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -501,8 +485,8 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
-        if (checknull() && CHECKID() && checkten()) {
-            insert();}
+        this.index = tblGrid.getRowCount() - 1;
+        this.edit();
     }//GEN-LAST:event_btnLastActionPerformed
 
     private void tblGridMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridMouseClicked
@@ -583,6 +567,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnFind;
     private javax.swing.JButton btnFirst;
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnNext;
@@ -600,6 +585,7 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     private javax.swing.JPanel pnlList;
     private javax.swing.JTable tblGrid;
     private javax.swing.JTextField txtDiemTL;
+    private javax.swing.JTextField txtFind;
     private javax.swing.JTextField txtMaKH;
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtSoDT;
