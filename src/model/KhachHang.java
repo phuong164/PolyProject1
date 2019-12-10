@@ -71,7 +71,8 @@ public class KhachHang implements Serializable {
         this.diem = diem;
     }
 
-   
-    
-    
+    @Override
+    public String toString() {
+        return tenKH;
+    }
 }

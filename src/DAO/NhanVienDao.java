@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Doipass;
 import model.NhanVien;
 
 /**
@@ -45,7 +46,8 @@ public class NhanVienDao {
         String sql = "SELECT * FROM NHANVIEN";
         return select(sql);
     }
-     public List<NhanVien> selectByName() {
+
+    public List<NhanVien> selectByName() {
         String sql = "SELECT hoTen FROM NHANVIEN";
         return select(sql);
     }
@@ -55,8 +57,6 @@ public class NhanVienDao {
         List<NhanVien> list = select(sql, manv);
         return list.size() > 0 ? list.get(0) : null;
     }
-
-
 
     private List<NhanVien> select(String sql, Object... args) {
         List<NhanVien> list = new ArrayList<>();
@@ -84,5 +84,12 @@ public class NhanVienDao {
         model.setHoTen(rs.getString("hoTen"));
         model.setVaiTro(rs.getBoolean("vaiTro"));
         return model;
+    }
+    public void update1(Doipass model) {
+        String sql = "UPDATE NHANVIEN SET matKhau=? WHERE maNV=?";
+        JdbcHelper.executeUpdate(sql,
+                model.getMatkhau(),
+                model.getMaNV());
+
     }
 }

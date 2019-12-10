@@ -17,11 +17,9 @@ import model.NguyenLieu;
  * @author OS
  */
 public class NguyenLieuDao {
-
-    public void insert(NguyenLieu model) {
-        String sql = "INSERT INTO NGUYENLIEU (maNL,tenNL,soLuong,donGia,nCC) VALUES (?, ?, ?, ?, ?)";
+     public void insert(NguyenLieu model) {
+        String sql = "INSERT INTO NGUYENLIEU (tenNL,soLuong,donGia,nCC) VALUES (?, ?, ?, ?)";
         JdbcHelper.executeUpdate(sql,
-                model.getMaNL(),
                 model.getTenNL(),
                 model.getSoLuong(),
                 model.getDonGia(),
@@ -29,19 +27,17 @@ public class NguyenLieuDao {
     }
 
     public void update(NguyenLieu model) {
-        String sql = "UPDATE NGUYENLIEU SET tenNL=?, soLuong=?, donGia=?, nCC=? where maNL=? ";
+        String sql = "UPDATE NGUYENLIEU SET soLuong=?, donGia=?, nCC=?, WHERE tenNL=?";
         JdbcHelper.executeUpdate(sql,
                 model.getTenNL(),
                 model.getSoLuong(),
                 model.getDonGia(),
-                model.getnCC(),
-                model.getMaNL()
-        );
+                model.getnCC());
     }
 
-    public void delete(String maNL) {
-        String sql = "DELETE FROM NGUYENLIEU WHERE maNL=?";
-        JdbcHelper.executeUpdate(sql, maNL);
+    public void delete(String tenNL) {
+        String sql = "DELETE FROM NGUYENLIEU WHERE tenNL=?";
+        JdbcHelper.executeUpdate(sql, tenNL);
     }
 
     public List<NguyenLieu> select() {
@@ -49,9 +45,9 @@ public class NguyenLieuDao {
         return (List<NguyenLieu>) select(sql);
     }
 
-    public NguyenLieu findById(String maNL) {
-        String sql = "SELECT * FROM NGUYENLIEU WHERE maNL=?";
-        List<NguyenLieu> list = (List<NguyenLieu>) select(sql, maNL);
+    public NguyenLieu findById(String tenNL) {
+        String sql = "SELECT * FROM NGUYENLIEU WHERE tenNL=?";
+        List<NguyenLieu> list = (List<NguyenLieu>) select(sql, tenNL);
         return list.size() > 0 ? list.get(0) : null;
     }
 
@@ -76,11 +72,11 @@ public class NguyenLieuDao {
 
     private NguyenLieu readFromResultSet(ResultSet rs) throws SQLException {
         NguyenLieu model = new NguyenLieu();
-        model.setMaNL(rs.getString("MaNL"));
-        model.setTenNL(rs.getString("TenNL"));
-        model.setSoLuong(rs.getInt("SoLuong"));
-        model.setDonGia(rs.getFloat("DonGia"));
-        model.setnCC(rs.getString("NCC"));
+        model.setTenNL(rs.getString("tenNL"));
+        model.setSoLuong(rs.getInt("soLuong"));
+        model.setDonGia(rs.getFloat("donGia"));
+        model.setnCC(rs.getString("nCC"));
         return model;
     }
 }
+

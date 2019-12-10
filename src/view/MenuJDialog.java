@@ -32,17 +32,19 @@ public class MenuJDialog extends javax.swing.JDialog {
         this.setTitle("Menu");
         this.setLocationRelativeTo(null);
     }
+
     public boolean check() {
-        if (txtMaSP.getText().equals("") || txtTenSP.getText().equals("") || txtGia.getText().equals("")
-                || lblHinh.getText().equals("")) {
+        Float gia1 = new Float(txtGia.getText());
+
+        if (txtMaSP.getText().equals("") || txtTenSP.getText().equals("") || txtGia.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Hãy nhập đủ dữ liệu sau đó ấn Save", "Error", 1);
             return false;
         } else if (!(txtMaSP.getText()).matches("SP[0-9][0-9]{1,9}")) {
             JOptionPane.showMessageDialog(rootPane, "Sai định dạng mã: SP001", "Error", 1);
             txtMaSP.requestFocus();
             return false;
-        } else if (!(txtGia.getText()).matches("[1-9]{0,9}")) {
-            JOptionPane.showMessageDialog(rootPane, "giá phải nhập số", "Error", 1);
+        } else if (gia1 <= 0) {
+            JOptionPane.showMessageDialog(rootPane, "giá phải nhập số dương", "Error", 1);
             txtGia.requestFocus();
             return false;
         }
@@ -93,6 +95,7 @@ public class MenuJDialog extends javax.swing.JDialog {
         try {
             dao.update(model);
             this.load();
+            this.clear();
             DialogHelper.alert(this, "Cập nhật thành công!");
         } catch (Exception e) {
             DialogHelper.alert(this, "Cập nhật thất bại!");
@@ -296,7 +299,13 @@ public class MenuJDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnDel)
                         .addGap(78, 78, 78)
-                        .addComponent(btnfirst))
+                        .addComponent(btnfirst)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPrevious)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnNext)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLast))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -307,19 +316,10 @@ public class MenuJDialog extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtMaSP)
                             .addComponent(txtTenSP)
-                            .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnPrevious)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnNext)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLast)
-                        .addGap(0, 106, Short.MAX_VALUE))))
+                            .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addComponent(lblHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 19, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,11 +453,14 @@ public class MenuJDialog extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        insert();
+        if (check()) {
+            this.insert();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
         // TODO add your handling code here:
+
         delete();
     }//GEN-LAST:event_btnDelActionPerformed
 
@@ -532,6 +535,7 @@ public class MenuJDialog extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MenuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */

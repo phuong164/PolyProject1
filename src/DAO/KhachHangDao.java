@@ -18,6 +18,7 @@ import model.KhachHang;
  */
 public class KhachHangDao {
 
+
     public void insert(KhachHang model) {
         String sql = "INSERT INTO KHACHHANG (maKH,tenKH,soDT,ngaySinh,diemTL) VALUES (?, ?, ?, ?,?)";
         JdbcHelper.executeUpdate(sql,
@@ -29,7 +30,9 @@ public class KhachHangDao {
     }
 
     public void update(KhachHang model) {
-        String sql = "UPDATE KHACHHANG SET tenKH=?,soDT=?,ngaySinh=?,diemTL=? where maKH=?";
+        String sql = "UPDATE KHACHHANG SET tenKH=?,soDT=?,ngaySinh=?,count( hd.maKH) as diemTL\n" +
+" from KHACHHANG kh join HOADON hd on  kh.maKH =  hd.maKH where  kh.maKH = ?" +
+" group by kh.maKH, kh.tenKH, kh.soDT, kh.ngaySinh";
         JdbcHelper.executeUpdate(sql,
                 model.getTenKH(),
                 model.getSoDT(),
@@ -39,15 +42,21 @@ public class KhachHangDao {
         );
     }
 
-    public void delete(int maKH) {
+    public void delete(int MaKH) {
         String sql = "DELETE FROM KHACHHANG WHERE maKH=?";
-        JdbcHelper.executeUpdate(sql, maKH);
+        JdbcHelper.executeUpdate(sql, MaKH);
     }
 
     public List<KhachHang> select() {
-        String sql = "SELECT * FROM KHACHHANG";
+        String sql = "select kh.maKH, tenKH, soDT, ngaySinh,count( hd.maKH) as diemTL\n"
+                + " from KHACHHANG kh join HOADON hd on  kh.maKH =  hd.maKH where  kh.maKH = hd.maKH\n"
+                + " group by kh.maKH, kh.tenKH, kh.soDT, kh.ngaySinh";
         return select(sql);
     }
+     public List<KhachHang> select1() {
+         String sql = "select * from KHACHHANG";
+       return select(sql);
+     }
 
     public KhachHang findById(int maKH) {
         String sql = "SELECT * FROM KHACHHANG WHERE maKH=?";
