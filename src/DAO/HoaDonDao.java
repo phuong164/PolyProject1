@@ -43,7 +43,7 @@ public class HoaDonDao {
         JdbcHelper.executeUpdate(sql, MaHD);
     }
 
-     public HoaDon findById(String mahd) {
+    public HoaDon findById(String mahd) {
         String sql = "SELECT * FROM HOADON WHERE maHD=?";
         List<HoaDon> list = select(sql, mahd);
         return list.size() > 0 ? list.get(0) : null;
@@ -52,6 +52,11 @@ public class HoaDonDao {
     public List<HoaDon> select() {
         String sql = "SELECT * FROM HOADON";
         return select(sql);
+    }
+
+    public List<HoaDon> selectByMaHD(String maHD) {
+        String sql = "SELECT * FROM HOADON where maHD like ? ";
+        return select(sql, "%" + maHD + "%");
     }
 
     private List<HoaDon> select(String sql, Object... args) {
@@ -82,4 +87,5 @@ public class HoaDonDao {
         model.setNgayXuatHD(rs.getDate("NgayXuatHD"));
         return model;
     }
+
 }

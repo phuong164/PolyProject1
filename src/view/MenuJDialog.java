@@ -8,10 +8,8 @@ package view;
 import DAO.MenuDao;
 import JDBC.DialogHelper;
 import JDBC.ShareHelper;
-import java.awt.Image;
 import java.io.File;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -95,7 +93,6 @@ public class MenuJDialog extends javax.swing.JDialog {
         try {
             dao.update(model);
             this.load();
-            this.clear();
             DialogHelper.alert(this, "Cập nhật thành công!");
         } catch (Exception e) {
             DialogHelper.alert(this, "Cập nhật thất bại!");
@@ -166,20 +163,29 @@ public class MenuJDialog extends javax.swing.JDialog {
         btnLast.setEnabled(!insertable && last);
     }
 
+//    void selectImage() {
+//        JFileChooser file = new JFileChooser();
+//        if (file.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+//            File f = file.getSelectedFile();
+//            String path = f.getAbsolutePath();
+//
+//            if (ShareHelper.saveLogo(f)) {
+//                ImageIcon img = new ImageIcon(new ImageIcon(f.getName()).getImage().getScaledInstance(lblHinh.getWidth(), lblHinh.getHeight(), Image.SCALE_SMOOTH));
+//                lblHinh.setIcon(ShareHelper.readLogo(f.getName()));
+//                lblHinh.setToolTipText(f.getName());
+//            }
+//        }
+//    }
     void selectImage() {
-        JFileChooser file = new JFileChooser();
-        if (file.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File f = file.getSelectedFile();
-            String path = f.getAbsolutePath();
-
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File f = fileChooser.getSelectedFile();
             if (ShareHelper.saveLogo(f)) {
-                ImageIcon img = new ImageIcon(new ImageIcon(f.getName()).getImage().getScaledInstance(lblHinh.getWidth(), lblHinh.getHeight(), Image.SCALE_SMOOTH));
                 lblHinh.setIcon(ShareHelper.readLogo(f.getName()));
                 lblHinh.setToolTipText(f.getName());
             }
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -317,19 +323,16 @@ public class MenuJDialog extends javax.swing.JDialog {
                             .addComponent(txtMaSP)
                             .addComponent(txtTenSP)
                             .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addComponent(lblHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 19, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
+                        .addGap(98, 98, 98)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtMaSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -340,8 +343,12 @@ public class MenuJDialog extends javax.swing.JDialog {
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                            .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnEdit)
@@ -396,7 +403,7 @@ public class MenuJDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
                 .addComponent(btnFind)
                 .addGap(36, 36, 36))
         );
@@ -418,13 +425,14 @@ public class MenuJDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(216, 216, 216)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(330, 330, 330)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

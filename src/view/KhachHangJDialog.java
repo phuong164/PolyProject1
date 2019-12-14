@@ -165,30 +165,25 @@ public class KhachHangJDialog extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        pnlEdit = new javax.swing.JPanel();
+        btnPrevious = new javax.swing.JButton();
         txtNgaySinh = new javax.swing.JTextField();
+        btnNext = new javax.swing.JButton();
         txtDiemTL = new javax.swing.JTextField();
+        btnLast = new javax.swing.JButton();
         txtMaKH = new javax.swing.JTextField();
-        lblMaKH = new javax.swing.JLabel();
-        lblTenKH = new javax.swing.JLabel();
-        lblSoDT = new javax.swing.JLabel();
+        btnAdd = new javax.swing.JButton();
+        lblMaKH1 = new javax.swing.JLabel();
+        btnEdit = new javax.swing.JButton();
+        lblTenKH1 = new javax.swing.JLabel();
+        btnDelete = new javax.swing.JButton();
+        lblSoDT1 = new javax.swing.JLabel();
+        btnFirst = new javax.swing.JButton();
         txtTenKH = new javax.swing.JTextField();
         txtSoDT = new javax.swing.JTextField();
-        lblNgaySinh = new javax.swing.JLabel();
-        lblDiemTL = new javax.swing.JLabel();
-        btnPrevious = new javax.swing.JButton();
-        btnNext = new javax.swing.JButton();
-        btnLast = new javax.swing.JButton();
-        btnAdd = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnFirst = new javax.swing.JButton();
-        pnlList = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tblGrid = new javax.swing.JTable();
-        txtFind = new javax.swing.JTextField();
-        btnFind = new javax.swing.JButton();
+        lblNgaySinh1 = new javax.swing.JLabel();
+        lblDiemTL1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -199,21 +194,6 @@ public class KhachHangJDialog extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("KHÁCH HÀNG");
-
-        lblMaKH.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblMaKH.setText("Mã khách hàng:");
-
-        lblTenKH.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblTenKH.setText("Tên Khách hàng:");
-
-        lblSoDT.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblSoDT.setText("Số điện thoại:");
-
-        lblNgaySinh.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblNgaySinh.setText("Ngày sinh:");
-
-        lblDiemTL.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblDiemTL.setText("Điển tích lũy:");
 
         btnPrevious.setText("<<");
         btnPrevious.addActionListener(new java.awt.event.ActionListener() {
@@ -243,12 +223,18 @@ public class KhachHangJDialog extends javax.swing.JDialog {
             }
         });
 
+        lblMaKH1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblMaKH1.setText("Mã khách hàng:");
+
         btnEdit.setText("edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
             }
         });
+
+        lblTenKH1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblTenKH1.setText("Tên Khách hàng:");
 
         btnDelete.setText("delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -257,86 +243,15 @@ public class KhachHangJDialog extends javax.swing.JDialog {
             }
         });
 
+        lblSoDT1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblSoDT1.setText("Số điện thoại:");
+
         btnFirst.setText("|<");
         btnFirst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFirstActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout pnlEditLayout = new javax.swing.GroupLayout(pnlEdit);
-        pnlEdit.setLayout(pnlEditLayout);
-        pnlEditLayout.setHorizontalGroup(
-            pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEditLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnAdd)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEdit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDelete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnFirst)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPrevious)
-                .addGap(18, 18, 18)
-                .addComponent(btnNext)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLast)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditLayout.createSequentialGroup()
-                .addContainerGap(112, Short.MAX_VALUE)
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTenKH, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblSoDT, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblMaKH, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblNgaySinh, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblDiemTL, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtSoDT)
-                    .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNgaySinh)
-                    .addComponent(txtTenKH)
-                    .addComponent(txtDiemTL, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(112, 112, 112))
-        );
-        pnlEditLayout.setVerticalGroup(
-            pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEditLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaKH))
-                .addGap(18, 18, 18)
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTenKH)
-                    .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSoDT)
-                    .addComponent(txtSoDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNgaySinh)
-                    .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDiemTL)
-                    .addComponent(txtDiemTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd)
-                    .addComponent(btnEdit)
-                    .addComponent(btnDelete)
-                    .addComponent(btnFirst)
-                    .addComponent(btnPrevious)
-                    .addComponent(btnNext)
-                    .addComponent(btnLast))
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Cập Nhật", pnlEdit);
 
         tblGrid.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -376,135 +291,148 @@ public class KhachHangJDialog extends javax.swing.JDialog {
                 tblGridMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblGrid);
+        jScrollPane2.setViewportView(tblGrid);
 
-        txtFind.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindActionPerformed(evt);
-            }
-        });
+        lblNgaySinh1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblNgaySinh1.setText("Ngày sinh:");
 
-        btnFind.setText("Find");
-        btnFind.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlListLayout = new javax.swing.GroupLayout(pnlList);
-        pnlList.setLayout(pnlListLayout);
-        pnlListLayout.setHorizontalGroup(
-            pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlListLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                    .addGroup(pnlListLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFind)))
-                .addContainerGap())
-        );
-        pnlListLayout.setVerticalGroup(
-            pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlListLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnFind)
-                    .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
-        );
-
-        jTabbedPane1.addTab("Danh Sánh", pnlList);
+        lblDiemTL1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblDiemTL1.setText("Điển tích lũy:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
-            .addComponent(jSeparator1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(290, 290, 290)
                 .addComponent(jLabel1)
-                .addGap(218, 218, 218))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(btnAdd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEdit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDelete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnFirst)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPrevious)
+                .addGap(18, 18, 18)
+                .addComponent(btnNext)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLast)
+                .addGap(37, 37, 37))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(33, 33, 33)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblTenKH1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblSoDT1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblMaKH1, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtSoDT)
+                                .addComponent(txtTenKH)
+                                .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(34, 34, 34)
+                                    .addComponent(lblNgaySinh1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                                    .addComponent(lblDiemTL1)
+                                    .addGap(18, 18, 18)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDiemTL, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGap(34, 34, 34)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 403, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd)
+                    .addComponent(btnEdit)
+                    .addComponent(btnDelete)
+                    .addComponent(btnFirst)
+                    .addComponent(btnPrevious)
+                    .addComponent(btnNext)
+                    .addComponent(btnLast))
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(85, 85, 85)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNgaySinh1)
+                        .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMaKH1)
+                        .addComponent(txtDiemTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTenKH1)
+                        .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDiemTL1)
+                        .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblSoDT1)
+                        .addComponent(txtSoDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(59, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFindActionPerformed
-
-    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnFindActionPerformed
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        insert();
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        this.update();
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        this.delete();
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
-        this.index = 0;
-        this.edit();
-    }//GEN-LAST:event_btnFirstActionPerformed
-
-    private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
-        this.index--;
-        this.edit();
-    }//GEN-LAST:event_btnPreviousActionPerformed
-
-    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        this.index++;
-        this.edit();
-    }//GEN-LAST:event_btnNextActionPerformed
-
-    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
-        this.index = tblGrid.getRowCount() - 1;
-        this.edit();
-    }//GEN-LAST:event_btnLastActionPerformed
-
-    private void tblGridMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridMouseClicked
-        // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
-            this.index = tblGrid.rowAtPoint(evt.getPoint());
-            if (this.index >= 0) {
-                this.edit();
-                jTabbedPane1.setSelectedIndex(0);
-            }
-        }
-    }//GEN-LAST:event_tblGridMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         load();
         setStatus(true);
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPreviousActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLastActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void tblGridMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblGridMouseClicked
 
     /**
      * @param args the command line arguments
@@ -567,25 +495,20 @@ public class KhachHangJDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnFind;
     private javax.swing.JButton btnFirst;
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JLabel lblDiemTL;
-    private javax.swing.JLabel lblMaKH;
-    private javax.swing.JLabel lblNgaySinh;
-    private javax.swing.JLabel lblSoDT;
-    private javax.swing.JLabel lblTenKH;
-    private javax.swing.JPanel pnlEdit;
-    private javax.swing.JPanel pnlList;
+    private javax.swing.JLabel lblDiemTL1;
+    private javax.swing.JLabel lblMaKH1;
+    private javax.swing.JLabel lblNgaySinh1;
+    private javax.swing.JLabel lblSoDT1;
+    private javax.swing.JLabel lblTenKH1;
     private javax.swing.JTable tblGrid;
     private javax.swing.JTextField txtDiemTL;
-    private javax.swing.JTextField txtFind;
     private javax.swing.JTextField txtMaKH;
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtSoDT;

@@ -10,13 +10,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet; 
 import java.sql.SQLException; 
+import java.sql.Statement;
 
 public class JdbcHelper {
     public static String driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
     public static String dburl = "jdbc:sqlserver://localhost:1433;databaseName=DUAN1;";   
     public static String username="sa";  
     public static String password="123";   
- 
+     public static Connection conn;
+
     static{ 
         try {            
             Class.forName(driver);  
@@ -27,13 +29,13 @@ public class JdbcHelper {
     }    
    
     public static PreparedStatement prepareStatement(String sql, Object...args) throws SQLException{
-        Connection connection = DriverManager.getConnection(dburl, username, password); 
+         conn = DriverManager.getConnection(dburl, username, password); 
         PreparedStatement pstmt = null;  
         if(sql.trim().startsWith("{")){ 
-            pstmt = connection.prepareCall(sql);   
+            pstmt = conn.prepareCall(sql);   
             }   
         else{            
-            pstmt = connection.prepareStatement(sql);    
+            pstmt = conn.prepareStatement(sql);    
         }       
         for(int i=0;i<args.length;i++){ 
             pstmt.setObject(i + 1, args[i]);  
@@ -63,6 +65,16 @@ public class JdbcHelper {
         catch (SQLException e) {       
             throw new RuntimeException(e);    
         }    
+    }
+    public static int ExecuteTruyVan(String sql){
+        try {
+            Statement stm = conn.createStatement();
+            int kq = stm.executeUpdate(sql);
+            return kq;
+        } catch (SQLException ex) {
+            System.out.println("Lỗi thực thi lệnh SQL");
+            return -1;
+        }        
     }
 } 
         

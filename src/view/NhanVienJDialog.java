@@ -26,7 +26,7 @@ public class NhanVienJDialog extends javax.swing.JDialog {
         initComponents();
         this.setTitle("Quản Lý Nhân Viên ");
         setLocationRelativeTo(null);
-        
+        init();
     }
     int index = 0; // vị trí của nhân viên đang hiển thị trên form 
     NhanVienDao dao = new NhanVienDao();

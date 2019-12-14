@@ -30,7 +30,6 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         this.setTitle("Thống Kê Doanh Thu ");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        init();
         
     }
 
@@ -83,9 +82,9 @@ void fillComboBoxThang() {
         model.removeAllElements();
         List<HoaDon> list = hdao.select();
         for (HoaDon kh : list) {
-            int nam = kh.getNgayXuatHD().getMonth()+ 1900;
-            if (model.getIndexOf(nam) < 0) {
-                model.addElement(nam);
+            int thang = kh.getNgayXuatHD().getMonth()+1;
+            if (model.getIndexOf(thang) < 0) {
+                model.addElement(thang);
             }
         }
         cboThang.setSelectedIndex(0);

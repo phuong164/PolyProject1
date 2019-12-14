@@ -7,7 +7,6 @@ package view;
 
 import DAO.NhanVienDao;
 import JDBC.DialogHelper;
-import JDBC.ShareHelper;
 import model.NhanVien;
 
 /**

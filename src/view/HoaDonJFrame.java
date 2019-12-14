@@ -5,6 +5,7 @@
  */
 package view;
 
+import DAO.HDCTDao;
 import DAO.HoaDonDao;
 import DAO.KhachHangDao;
 import DAO.MenuDao;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.HDCT;
 import model.HoaDon;
 import model.KhachHang;
 import model.Menu;
@@ -32,6 +34,7 @@ public class HoaDonJFrame extends javax.swing.JFrame {
     NhanVienDao nvdao = new NhanVienDao();
     KhachHangDao khdao = new KhachHangDao();
     HoaDonDao hdao = new HoaDonDao();
+    HDCTDao ctdao = new HDCTDao();
     public static String MaSP;
     static int SoLuong;
 
@@ -92,6 +95,36 @@ public class HoaDonJFrame extends javax.swing.JFrame {
         }
     }
 
+    private void ThemCTHDTuTable(String MaHD) {
+        for (int i = 0; i < tblDS.getRowCount(); i++) {
+
+            String masp = tblDS.getValueAt(i, 1).toString();
+            int soluong = Integer.parseInt(tblDS.getValueAt(i, 3).toString());
+            float thanhtien = DateHelper.ChuyenTien(tblDS.getValueAt(i, 5).toString());
+
+        }
+    }
+
+    void insert() {
+
+        HDCT model = new HDCT();
+        for (int i = 0; i < tblDS.getRowCount(); i++) {
+            model.setMahd(txtMaHD.getText());
+            model.setMasp(tblDS.getValueAt(i, 1).toString());
+            model.setSoluong(Integer.parseInt(tblDS.getValueAt(i, 3).toString()));
+            model.setThanhtien(DateHelper.ChuyenTien(tblDS.getValueAt(i, 5).toString()));
+            try {
+                ctdao.insert(model);
+
+                System.out.println("thêm CTHD thành công!");
+            } catch (Exception e) {
+                System.out.println("Lỗi thêm CTHD!");
+            }
+        }
+
+    }
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,6 +151,7 @@ public class HoaDonJFrame extends javax.swing.JFrame {
         txtMaHD = new javax.swing.JTextField();
         cboTenNV = new javax.swing.JComboBox<>();
         cboTenKH = new javax.swing.JComboBox<>();
+        btnClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -218,27 +252,39 @@ public class HoaDonJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnClear.setText("Tạo Mới");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cboTenNV, 0, 154, Short.MAX_VALUE)
-                    .addComponent(cboTenKH, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(19, 19, 19))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnThanhToan))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnThanhToan)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnClear))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cboTenNV, 0, 154, Short.MAX_VALUE)
+                            .addComponent(cboTenKH, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(19, 19, 19))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(20, 20, 20)
@@ -268,7 +314,8 @@ public class HoaDonJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(btnThanhToan))
+                    .addComponent(btnThanhToan)
+                    .addComponent(btnClear))
                 .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -375,9 +422,9 @@ public class HoaDonJFrame extends javax.swing.JFrame {
             model.setNgayXuatHD(DateHelper.toDate(txtNgayXuat.getText()));
             //Thêm hóa đơn vào database
             hdao.insert(model);
-
             //Thêm tất cả chi tiết hóa đơn theo MaHD vừa thêm
-//        ThemCTHDTuTable(hd.getMaHD());
+//            ThemCTHDTuTable(model.getMaHD());
+            insert();
             //tạo lại hóa đơn mới
             TaoMoiHD();
             DialogHelper.alert(this, "Đã lưu Hóa đơn!");
@@ -411,6 +458,14 @@ public class HoaDonJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         selectComboBoxKH();
     }//GEN-LAST:event_cboTenKHActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        txtMaHD.setText("");
+        txtThanhTien.setText("");
+        DefaultTableModel tbModel = (DefaultTableModel)tblDS.getModel();
+        tbModel.setRowCount(0);
+    }//GEN-LAST:event_btnClearActionPerformed
     void load() {
         DefaultTableModel model = (DefaultTableModel) tblGridMenu.getModel();
         model.setRowCount(0);
@@ -468,6 +523,7 @@ public class HoaDonJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JComboBox<String> cboTenKH;
     private javax.swing.JComboBox<String> cboTenNV;

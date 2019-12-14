@@ -5,7 +5,6 @@
  */
 package JDBC;
 
-import model.NhanVien;
 import java.awt.Image;
 import java.io.File;
 import java.nio.file.Files;
@@ -13,24 +12,31 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import javax.swing.ImageIcon;
+import model.NhanVien;
 
-
+/**
+ *
+ * @author phuong
+ */
 public class ShareHelper {
 
     public static final Image APP_ICON;
 
-    static {         // Tải biểu tượng ứng dụng    
-        String file = "/photo/15.jpg";
+    static {
+        // Tải biểu tượng ứng dụng
+        String file = "/photo/banner.jpg";
         APP_ICON = new ImageIcon(ShareHelper.class.getResource(file)).getImage();
     }
 
     public static boolean saveLogo(File file) {
-        File dir = new File("image");         // Tạo thư mục nếu chưa tồn tại  
+        File dir = new File("logos");
+        // Tạo thư mục nếu chưa tồn tại
         if (!dir.exists()) {
             dir.mkdirs();
         }
         File newFile = new File(dir, file.getName());
-        try {             // Copy vào thư mục logos (đè nếu đã tồn tại)         
+        try {
+            // Copy vào thư mục logos (đè nếu đã tồn tại)
             Path source = Paths.get(file.getAbsolutePath());
             Path destination = Paths.get(newFile.getAbsolutePath());
             Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
@@ -40,33 +46,18 @@ public class ShareHelper {
         }
     }
 
-    /**
-     * * Đọc hình ảnh logo chuyên đề * @param fileName là tên file logo
-     *
-     *
-     * @return ảnh đọc được
-     */
     public static ImageIcon readLogo(String fileName) {
-        
-        File path = new File("image", fileName);
+        File path = new File("logos", fileName);
         return new ImageIcon(path.getAbsolutePath());
     }
-    /**
-     * * Đối tượng này chứa thông tin người sử dụng sau khi đăng nhập
-     */
     public static NhanVien USER = null;
 
-    /**
-     * * Xóa thông tin của người sử dụng khi có yêu cầu đăng xuất
-     */
     public static void logoff() {
         ShareHelper.USER = null;
     }
 
-    /**
-     * * Kiểm tra xem đăng nhập hay chưa * @return đăng nhập hay chưa
-     */
     public static boolean authenticated() {
         return ShareHelper.USER != null;
     }
+
 }

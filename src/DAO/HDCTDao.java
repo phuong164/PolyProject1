@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.HoaDonCT;
+import model.HDCT;
 
 /**
  *
@@ -18,38 +18,41 @@ import model.HoaDonCT;
  */
 public class HDCTDao {
 
-    public void insert(HoaDonCT model) {
-        String sql = "INSERT INTO HDCT (maSP, tenSP,soLuong, gia) VALUES (?, ?, ?, ?)";
+    public void insert(HDCT model) {
+        String sql = "INSERT INTO HDCT (maHD, maSP, soLuong, thanhTien) VALUES(?,?,?,?)";
         JdbcHelper.executeUpdate(sql,
-                model.getMaSP(),
-                model.getTenSP(),
-                model.getSoLuong(),
-                model.getGia()
+                model.getMahd(),
+                model.getMasp(),
+                model.getSoluong(),
+                model.getThanhtien()
         );
+        System.out.println(sql);
     }
 
-    public void update(HoaDonCT model) {
-        String sql = "UPDATE HDCT SET tenSP=?, soLuong=?, gia=? WHERE maSP=?";
-        JdbcHelper.executeUpdate(sql,
-                model.getTenSP(),
-                model.getSoLuong(),
-                model.getGia(),
-                model.getMaSP());
+    public HDCT findById(String mahd) {
+        String sql = "SELECT * FROM HDCT WHERE maHD=?";
+        List<HDCT> list = select(sql, mahd);
+        return list.size() > 0 ? list.get(0) : null;
     }
 
-    public List<HoaDonCT> select() {
+    public List<HDCT> select() {
         String sql = "SELECT * FROM HDCT";
         return select(sql);
     }
 
-    private List<HoaDonCT> select(String sql, Object... args) {
-        List<HoaDonCT> list = new ArrayList<>();
+    public List<HDCT> selectByMaHD(String maHD) {
+        String sql = "SELECT * FROM HDCT where maHD like ? ";
+        return select(sql, "%" + maHD + "%");
+    }
+
+    private List<HDCT> select(String sql, Object... args) {
+        List<HDCT> list = new ArrayList<>();
         try {
             ResultSet rs = null;
             try {
                 rs = JdbcHelper.executeQuery(sql, args);
                 while (rs.next()) {
-                    HoaDonCT model = readFromResultSet(rs);
+                    HDCT model = readFromResultSet(rs);
                     list.add(model);
                 }
             } finally {
@@ -61,12 +64,12 @@ public class HDCTDao {
         return list;
     }
 
-    private HoaDonCT readFromResultSet(ResultSet rs) throws SQLException {
-        HoaDonCT model = new HoaDonCT();
-        model.setMaSP(rs.getString("MaSP"));
-        model.setTenSP(rs.getString("TenSP"));
-        model.setSoLuong(rs.getInt("SoLuong"));
-        model.setGia(rs.getFloat("Gia"));
+    private HDCT readFromResultSet(ResultSet rs) throws SQLException {
+        HDCT model = new HDCT();
+        model.setMahd(rs.getString("MaHD"));
+        model.setMasp(rs.getString("MaSP"));
+        model.setSoluong(rs.getInt("SoLuong"));
+        model.setThanhtien(rs.getFloat("ThanhTien"));
         return model;
     }
 

@@ -130,26 +130,34 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="cboTenNV" pref="154" max="32767" attributes="0"/>
-                      <Component id="cboTenKH" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jScrollPane2" min="-2" pref="456" max="-2" attributes="0"/>
+                                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel9" min="-2" pref="64" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="txtThanhTien" min="-2" pref="138" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="btnThanhToan" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="btnClear" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="cboTenNV" pref="154" max="32767" attributes="0"/>
+                              <Component id="cboTenKH" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel9" min="-2" pref="64" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtThanhTien" min="-2" pref="138" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnThanhToan" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="jScrollPane2" min="-2" pref="456" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="55" max="32767" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -187,6 +195,7 @@
                       <Component id="txtThanhTien" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnThanhToan" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnClear" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="28" max="32767" attributes="0"/>
               </Group>
@@ -355,6 +364,14 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnClear">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="T&#x1ea1;o M&#x1edb;i"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
