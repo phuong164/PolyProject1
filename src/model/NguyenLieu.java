@@ -22,6 +22,14 @@ public class NguyenLieu implements Serializable {
     public NguyenLieu() {
     }
 
+    public NguyenLieu(String maNL, String tenNL, int soLuong, float donGia, String nCC) {
+        this.maNL = maNL;
+        this.tenNL = tenNL;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
+        this.nCC = nCC;
+    }
+
     public void setMaNL(String maNL) {
         this.maNL = maNL;
     }

@@ -127,8 +127,8 @@ public class NhanVienJDialog extends javax.swing.JDialog {
         txtMa.setText(model.getMaNV());
         txtMatKhau.setText(model.getMatKhau());
         txtTenNhanVien.setText(model.getHoTen());
-        rdoQuanLy.setSelected(!model.isVaiTro());
-        rdoNV.setSelected(model.isVaiTro());
+        rdoQuanLy.setSelected(model.isVaiTro());
+        rdoNV.setSelected(!model.isVaiTro());
     }
 
     NhanVien getModel() {
@@ -137,6 +137,7 @@ public class NhanVienJDialog extends javax.swing.JDialog {
         model.setHoTen(txtTenNhanVien.getText());
         model.setMatKhau(new String(txtMatKhau.getPassword()));
         model.setVaiTro(rdoQuanLy.isSelected());
+        model.setVaiTro(!rdoNV.isSelected());
         return model;
     }
 
@@ -208,10 +209,10 @@ public class NhanVienJDialog extends javax.swing.JDialog {
         jLabel6.setText("Vai Trò:");
 
         buttonGroup1.add(rdoQuanLy);
+        rdoQuanLy.setSelected(true);
         rdoQuanLy.setText("Quản Lý");
 
         buttonGroup1.add(rdoNV);
-        rdoNV.setSelected(true);
         rdoNV.setText("Nhân Viên");
 
         btnAdd.setText("Add");

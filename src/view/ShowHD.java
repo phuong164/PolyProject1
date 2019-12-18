@@ -25,7 +25,9 @@ public class ShowHD extends javax.swing.JDialog {
     public ShowHD(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
+    int index = 0;
     HoaDonDao dao = new HoaDonDao();
     HDCTDao ctdao = new HDCTDao();
 
@@ -63,12 +65,41 @@ public class ShowHD extends javax.swing.JDialog {
                 Object[] row = {
                     cthd.getMahd(),
                     cthd.getMasp(),
+                    cthd.getTensp(),
                     cthd.getSoluong(),
                     cthd.getThanhtien()};
                 model.addRow(row);
             }
         } catch (Exception e) {
             DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void edit() {
+        try {
+            String mahd = (String) tblHD.getValueAt(this.index, 0);
+            HoaDon model = dao.findById(mahd);
+            if (model != null) {
+                txtma.setText(mahd);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void delete() {
+        if (DialogHelper.confirm(this, "Bạn thực sự muốn xoá hóa đơn này?")) {
+            String mahd = txtma.getText();
+            try {
+                ctdao.delete(mahd);
+                dao.delete(mahd);
+                this.load();
+                loadCTHD();
+                txtma.setText("");
+                DialogHelper.alert(this, "Xóa thành công!");
+            } catch (Exception e) {
+                DialogHelper.alert(this, "Xóa thất bại!");
+            }
         }
     }
 
@@ -88,6 +119,8 @@ public class ShowHD extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtma = new javax.swing.JTextField();
         btnfind = new javax.swing.JButton();
+        btnDel = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -124,17 +157,17 @@ public class ShowHD extends javax.swing.JDialog {
 
         tblCTHD.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "MaHD", "MaSP", "SoLuong", "ThanhTien"
+                "MaHD", "MaSP", "TenSP", "SoLuong", "ThanhTien"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -153,16 +186,24 @@ public class ShowHD extends javax.swing.JDialog {
             }
         });
 
+        btnDel.setText("Delete");
+        btnDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelActionPerformed(evt);
+            }
+        });
+
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(197, 197, 197)
                 .addComponent(jLabel1)
@@ -170,7 +211,17 @@ public class ShowHD extends javax.swing.JDialog {
                 .addComponent(txtma, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnfind)
+                .addGap(18, 18, 18)
+                .addComponent(btnDel)
+                .addGap(18, 18, 18)
+                .addComponent(btnReset)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,8 +230,10 @@ public class ShowHD extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnfind))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                    .addComponent(btnfind)
+                    .addComponent(btnDel)
+                    .addComponent(btnReset))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -198,16 +251,12 @@ public class ShowHD extends javax.swing.JDialog {
 
     private void tblHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHDMouseClicked
         // TODO add your handling code here:
-//        for (int i = 0; i < tblHD.getRowCount(); i++) {
-//            if (evt.getClickCount() == 2) {
-//                String ma = tblHD.getValueAt(i, 0).toString();
-//                HDCT ct = new HDCT();
-//                if(ma==ct.getMahd()){
-//                    loadCTHD(ma);
-//                }
-//            }
-//
-//        }
+        if (evt.getClickCount() == 2) {
+            index = tblHD.rowAtPoint(evt.getPoint());
+            if (index >= 0) {
+                edit();
+            }
+        }
 
     }//GEN-LAST:event_tblHDMouseClicked
 
@@ -217,6 +266,18 @@ public class ShowHD extends javax.swing.JDialog {
         loadCTHD();
         txtma.setText("");
     }//GEN-LAST:event_btnfindActionPerformed
+
+    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
+        // TODO add your handling code here:
+        delete();
+    }//GEN-LAST:event_btnDelActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        load();
+        loadCTHD();
+        txtma.setText("");
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,6 +322,8 @@ public class ShowHD extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDel;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnfind;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

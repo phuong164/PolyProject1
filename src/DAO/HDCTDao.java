@@ -19,14 +19,21 @@ import model.HDCT;
 public class HDCTDao {
 
     public void insert(HDCT model) {
-        String sql = "INSERT INTO HDCT (maHD, maSP, soLuong, thanhTien) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO HDCT (maHD, maSP,tenSP, soLuong,gia, thanhTien) VALUES(?,?,?,?,?,?)";
         JdbcHelper.executeUpdate(sql,
                 model.getMahd(),
                 model.getMasp(),
+                model.getTensp(),
                 model.getSoluong(),
+                model.getGia(),
                 model.getThanhtien()
         );
         System.out.println(sql);
+    }
+
+    public void delete(String mahd) {
+        String sql = "DELETE FROM HDCT WHERE maHD=?";
+        JdbcHelper.executeUpdate(sql, mahd);
     }
 
     public HDCT findById(String mahd) {
@@ -68,13 +75,11 @@ public class HDCTDao {
         HDCT model = new HDCT();
         model.setMahd(rs.getString("MaHD"));
         model.setMasp(rs.getString("MaSP"));
+        model.setTensp(rs.getString("TenSP"));
         model.setSoluong(rs.getInt("SoLuong"));
+        model.setGia(rs.getFloat("Gia"));
         model.setThanhtien(rs.getFloat("ThanhTien"));
         return model;
     }
 
-    public void delete(String masp) {
-        String sql = "DELETE FROM HDCT WHERE maSP=?";
-        JdbcHelper.executeUpdate(sql, masp);
-    }
 }

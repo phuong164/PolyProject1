@@ -13,19 +13,41 @@ public class HDCT {
     private int ID;
     private String mahd;
     private String masp;
+    private String tensp;
     private int soluong;
+    private float gia;
     private float thanhtien;
 
     public HDCT() {
     }
 
-    public HDCT(int ID, String mahd, String masp, int soluong, float thanhtien) {
+    public HDCT(int ID, String mahd, String masp, String tensp, int soluong, float gia, float thanhtien) {
         this.ID = ID;
         this.mahd = mahd;
         this.masp = masp;
+        this.tensp = tensp;
         this.soluong = soluong;
+        this.gia = gia;
         this.thanhtien = thanhtien;
     }
+
+    public String getTensp() {
+        return tensp;
+    }
+
+    public void setTensp(String tensp) {
+        this.tensp = tensp;
+    }
+
+    public float getGia() {
+        return gia;
+    }
+
+    public void setGia(float gia) {
+        this.gia = gia;
+    }
+
+
 
     public int getID() {
         return ID;

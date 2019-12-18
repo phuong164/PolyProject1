@@ -27,8 +27,8 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Quản Lý Quán Trà Sữa ");
-//        new ChaoJDialog(this, true).setVisible(true);
-//        new DangNhapJDialog(this, true).setVisible(true);
+        new ChaoJDialog(this, true).setVisible(true);
+        new DangNhapJDialog(this, true).setVisible(true);
         new Timer(1000, new ActionListener() {
             SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss a");
 
@@ -43,6 +43,7 @@ public class Main extends javax.swing.JFrame {
         setIconImage(ShareHelper.APP_ICON);
         setLocationRelativeTo(null);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -273,7 +274,8 @@ public class Main extends javax.swing.JFrame {
 
     private void btnTKDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTKDoanhThuActionPerformed
         // TODO add your handling code here:
-        new ThongKeJFrame().setVisible(true);
+            new ThongKeJFrame().setVisible(true);
+        
     }//GEN-LAST:event_btnTKDoanhThuActionPerformed
 
     private void mnuQLKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuQLKHActionPerformed

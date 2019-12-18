@@ -23,14 +23,14 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jLabel1" max="32767" attributes="0"/>
           <Component id="jProgressBar2" max="32767" attributes="0"/>
+          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jLabel1" min="-2" pref="292" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="558" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jProgressBar2" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -41,7 +41,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/photo/bobapop_7943649.jpg"/>
+          <Image iconType="3" name="/photo/13512145_267258226964137_5517205962775876770_n.jpg"/>
         </Property>
       </Properties>
     </Component>
